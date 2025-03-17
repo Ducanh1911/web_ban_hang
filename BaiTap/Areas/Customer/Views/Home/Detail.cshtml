@@ -1,0 +1,75 @@
+﻿@model BaiTap.Models.Product
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="product-detail">
+    <img src="@Url.Content(Model.imageUrl)" alt="@Model.productName" class="product-detail-image">
+    <div class="product-detail-info">
+        <h2>@Model.productName</h2>
+        <p class="price">
+            @if (Model.discount > 0)
+            {
+                <span class="original-price">@($"{Model.price:C}")</span>
+                <span class="discounted-price">@($"{(Model.price - Model.discount):C}")</span>
+            }
+            else
+            {
+                <span>@($"{Model.price:C}")</span>
+            }
+        </p>
+
+        <p>@Model.description</p>
+        <p><strong>Kho:</strong> @Model.stock sản phẩm</p>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
+
+    </div>
+</div>
+
+<style>
+    .product-detail {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .product-detail-image {
+        width: 300px;
+        height: auto;
+    }
+
+    .product-detail-info {
+        max-width: 500px;
+    }
+
+    .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ff6600;
+    }
+
+    .original-price {
+        text-decoration: line-through;
+        color: #999;
+    }
+
+    .discounted-price {
+        color: #e60000;
+        font-weight: bold;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #fff;
+        background: #007bff;
+        border-radius: 5px;
+    }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+</style>

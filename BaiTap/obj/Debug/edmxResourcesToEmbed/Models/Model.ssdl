@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="quanLyBanHangModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="cartId" />
+    </Key>
+    <Property Name="cartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" />
+    <Property Name="productId" Type="int" Nullable="false" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="createdAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="categoryId" />
+    </Key>
+    <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="categoryName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="255" />
+    <Property Name="createdAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Coupons">
+    <Key>
+      <PropertyRef Name="couponId" />
+    </Key>
+    <Property Name="couponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="discountType" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="discountValue" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="minOrderAmount" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="maxDiscount" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="startDate" Type="date" Nullable="false" />
+    <Property Name="endDate" Type="date" Nullable="false" />
+    <Property Name="usageLimit" Type="int" />
+    <Property Name="timesUsed" Type="int" />
+  </EntityType>
+  <EntityType Name="Discounts">
+    <Key>
+      <PropertyRef Name="discountId" />
+    </Key>
+    <Property Name="discountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="productId" Type="int" Nullable="false" />
+    <Property Name="discountType" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="discountValue" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="startDate" Type="date" Nullable="false" />
+    <Property Name="endDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetails">
+    <Key>
+      <PropertyRef Name="orderDetailId" />
+    </Key>
+    <Property Name="orderDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="orderId" Type="int" Nullable="false" />
+    <Property Name="productId" Type="int" Nullable="false" />
+    <Property Name="quantity" Type="int" Nullable="false" />
+    <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="discount" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="orderId" />
+    </Key>
+    <Property Name="orderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="totalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="discountAmount" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="finalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="status" Type="nvarchar" MaxLength="20" />
+    <Property Name="orderDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="paymentId" />
+    </Key>
+    <Property Name="paymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="orderId" Type="int" Nullable="false" />
+    <Property Name="paymentMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="paymentStatus" Type="nvarchar" MaxLength="20" />
+    <Property Name="transactionId" Type="nvarchar" MaxLength="255" />
+    <Property Name="paidAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="paidDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="productId" />
+    </Key>
+    <Property Name="productId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="productName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="description" Type="nvarchar" MaxLength="255" />
+    <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="discount" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="stock" Type="int" Nullable="false" />
+    <Property Name="categoryId" Type="int" />
+    <Property Name="imageUrl" Type="nvarchar" MaxLength="255" />
+    <Property Name="createdAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Reviews">
+    <Key>
+      <PropertyRef Name="reviewId" />
+    </Key>
+    <Property Name="reviewId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="productId" Type="int" Nullable="false" />
+    <Property Name="rating" Type="int" />
+    <Property Name="comment" Type="nvarchar" MaxLength="255" />
+    <Property Name="createdAt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Shipments">
+    <Key>
+      <PropertyRef Name="shipmentId" />
+    </Key>
+    <Property Name="shipmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="orderId" Type="int" Nullable="false" />
+    <Property Name="trackingNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="carrier" Type="nvarchar" MaxLength="100" />
+    <Property Name="status" Type="nvarchar" MaxLength="20" />
+    <Property Name="estimatedDelivery" Type="date" />
+    <Property Name="deliveredDate" Type="date" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="passwordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="phoneNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="address" Type="nvarchar" MaxLength="255" />
+    <Property Name="role" Type="nvarchar" MaxLength="20" />
+    <Property Name="createdAt" Type="datetime" />
+  </EntityType>
+  <Association Name="FK__Cart__productId__18EBB532">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cart__userId__17F790F9">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Discounts__produ__75A278F5">
+    <End Role="Products" Type="Self.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Discounts" Type="Self.Discounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="Discounts">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__order__5DCAEF64">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="orderId" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="orderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__produ__5EBF139D">
+    <End Role="Products" Type="Self.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__userId__571DF1D5">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payments__orderI__6383C8BA">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="orderId" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="orderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__catego__534D60F1">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="categoryId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reviews__product__6B24EA82">
+    <End Role="Products" Type="Self.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productId" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="productId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reviews__userId__6A30C649">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipments__order__70DDC3D8">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Shipments" Type="Self.Shipments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="orderId" />
+      </Principal>
+      <Dependent Role="Shipments">
+        <PropertyRef Name="orderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="quanLyBanHangModelStoreContainer">
+    <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Coupons" EntityType="Self.Coupons" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Discounts" EntityType="Self.Discounts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shipments" EntityType="Self.Shipments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Cart__productId__18EBB532" Association="Self.FK__Cart__productId__18EBB532">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cart__userId__17F790F9" Association="Self.FK__Cart__userId__17F790F9">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Discounts__produ__75A278F5" Association="Self.FK__Discounts__produ__75A278F5">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Discounts" EntitySet="Discounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__order__5DCAEF64" Association="Self.FK__OrderDeta__order__5DCAEF64">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__produ__5EBF139D" Association="Self.FK__OrderDeta__produ__5EBF139D">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__userId__571DF1D5" Association="Self.FK__Orders__userId__571DF1D5">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payments__orderI__6383C8BA" Association="Self.FK__Payments__orderI__6383C8BA">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__catego__534D60F1" Association="Self.FK__Products__catego__534D60F1">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reviews__product__6B24EA82" Association="Self.FK__Reviews__product__6B24EA82">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reviews__userId__6A30C649" Association="Self.FK__Reviews__userId__6A30C649">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipments__order__70DDC3D8" Association="Self.FK__Shipments__order__70DDC3D8">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Shipments" EntitySet="Shipments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

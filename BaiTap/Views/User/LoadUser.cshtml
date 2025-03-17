@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BaiTap.Models.User>
+
+@{
+    ViewBag.Title = "Tài Khoản";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Tài khoản</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passwordHash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.role)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.createdAt)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.passwordHash)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createdAt)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.userId }) |
+            </td>
+        </tr>
+    }
+
+</table>

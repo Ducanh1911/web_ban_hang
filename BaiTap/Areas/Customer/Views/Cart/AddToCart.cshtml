@@ -1,0 +1,44 @@
+﻿@model List<BaiTap.Models.Cart>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">🛒 Giỏ hàng</h2>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Thành tiền</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Product.productName</td>
+                        <td>
+                            <form method="post" action="@Url.Action("UpdateCart", "Cart")">
+                                <input type="hidden" name="productId" value="@item.productId" />
+                                <input type="number" name="quantity" value="@item.quantity" min="1" class="form-control" style="width: 60px; display: inline-block;" />
+                                <button type="submit" class="btn btn-sm btn-primary">✔</button>
+                            </form>
+                        </td>
+                        <td>@($"{item.Product.price:C}")</td>
+                        <td>
+                            <a href="@Url.Action("RemoveFromCart", "Cart", new { id = item.productId })" class="btn btn-sm btn-danger">❌</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <h4><strong>Tổng tiền:</strong> @($"{Model.Sum(i => i.Product.price):C}")</h4>
+            <a href="@Url.Action("Checkout", "Cart")" class="btn btn-success">🛍 Thanh toán</a>
+        </div>
+   

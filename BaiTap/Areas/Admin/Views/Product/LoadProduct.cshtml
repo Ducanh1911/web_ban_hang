@@ -1,0 +1,200 @@
+﻿
+@model IEnumerable<BaiTap.Models.Product>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LoadProduct</title>
+</head>
+<body>
+    <p>
+        <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#addProductDrawer">
+            Thêm mới
+        </button>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.productName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.imageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createdAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.categoryName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.productName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.discount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.stock)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.imageUrl))
+                    {
+                        <img src="@Url.Content(item.imageUrl)" alt="Image" style="width: 100px; height: auto;" />
+                    }
+                    else
+                    {
+                        <span>No image</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.createdAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.categoryName)
+                </td>
+                <td>
+                    @*<button class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#editProductDrawer"
+                            data-product-id="@item.productId">
+                        Edit
+                    </button>*@
+
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.productId }) |
+                    @Html.ActionLink("Details", "Detail", new { id = item.productId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.productId }, new { onclick = "return confirmDelete(" + item.productId + ");" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
+
+
+<script>
+
+    function confirmDelete(url) {
+        if (confirm("Bạn muốn xoá sản phẩm này?")) {
+            window.location.href = url;
+        }
+    }
+</script>
+
+@*thêm sản phẩm*@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="addProductDrawer" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasLabel">Thêm sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form action="@Url.Action("Add", "Product")" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="productId" id="productId" />
+            <div class="mb-3">
+                <label class="form-label">Tên sản phẩm</label>
+                <input type="text" class="form-control" name="productName" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea class="form-control" name="description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Giá</label>
+                <input type="number" class="form-control" name="price" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Giảm giá</label>
+                <input type="number" class="form-control" name="discount">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Số lượng</label>
+                <input type="number" class="form-control" name="stock">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Chọn ảnh</label>
+                <input type="file" name="file" class="form-control" accept="image/*">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ngày tạo</label>
+                <input type="date" class="form-control" name="createdAt">
+            </div>
+
+            <button type="submit" class="btn btn-success">Lưu</button>
+        </form>
+    </div>
+</div>
+
+@*cập nhật sản phẩm*@
+<!--<div class="offcanvas offcanvas-end" tabindex="-1" id="editProductDrawer" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasLabel">Cập nhật sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form action="@Url.Action("Edit", "Product" )" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label class="form-label">Tên sản phẩm</label>
+                <input type="text" class="form-control" name="productName" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mô tả</label>
+                <textarea class="form-control" name="description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Giá</label>
+                <input type="number" class="form-control" name="price" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Giảm giá</label>
+                <input type="number" class="form-control" name="discount">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Số lượng</label>
+                <input type="number" class="form-control" name="stock">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Chọn ảnh</label>
+                <input type="file" name="file" class="form-control" accept="image/*">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ngày tạo</label>
+                <input type="date" class="form-control" name="createdAt">
+            </div>
+
+            <button type="submit" class="btn btn-success">Lưu</button>
+        </form>
+    </div>
+</div>-->

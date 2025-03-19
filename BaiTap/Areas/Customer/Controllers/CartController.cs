@@ -34,7 +34,7 @@ namespace BaiTap.Areas.Customer.Controllers
             var userId = SessionConfig.GetUserId();
             if (userId == null)
             {
-                return RedirectToAction("Login", "User");
+                return Redirect("~/User/Login");
             }
 
             var cartItem = _db.Carts.FirstOrDefault(c => c.userId == userId && c.productId == productId);

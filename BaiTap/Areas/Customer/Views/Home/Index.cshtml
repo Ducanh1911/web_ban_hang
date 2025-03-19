@@ -5,7 +5,7 @@
 }
 
 <h2 class="text-center">Danh sách sản phẩm</h2>
-<a href="~/Cart/AddToCart">Giỏ Hàng</a>
+<a href="~/Customer/Cart/Cart">Giỏ Hàng</a>
 <div class="product-grid">
     @foreach (var item in Model)
     {
@@ -36,8 +36,11 @@
                     }
                 </p>
                 <a href="@Url.Action("Detail", "Home", new { id = item.productId })" class="btn btn-primary">Mua Ngay</a>
-                <a href="@Url.Action("Index", "Home", new { id = item.productId })" class="btn btn-primary">Thêm</a>
-
+                <form action="@Url.Action("AddToCart", "Cart")" method="post">
+                    <input type="hidden" name="productId" value="@item.productId" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </form>
             </div>
         </div>
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BaiTap.Models.Product>
+﻿﻿@model IEnumerable<BaiTap.Models.Product>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,14 +12,14 @@
         <div class="product-card">
             <div class="product-image">
                 <a href="@Url.Action("Detail", "Home", new { id = item.productId })">
-                @if (!string.IsNullOrEmpty(item.imageUrl))
-                {
-                    <img src="@Url.Content(item.imageUrl)" alt="@item.productName">
-                }
-                else
-                {
-                    <img src="~/images/no-image.png" alt="No Image">
-                }
+                    @if (!string.IsNullOrEmpty(item.imageUrl))
+                    {
+                        <img src="@Url.Content(item.imageUrl)" alt="@item.productName">
+                    }
+                    else
+                    {
+                        <img src="~/images/no-image.png" alt="No Image">
+                    }
                 </a>
             </div>
             <div class="product-info">

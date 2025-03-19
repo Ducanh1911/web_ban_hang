@@ -30,7 +30,8 @@ namespace BaiTap.Controllers
             if(user != null)
             {
                 SessionConfig.SetUser(user);
-                if(user.role == "Admin")
+                SessionConfig.SetUserId(user.userId);
+                if (user.role == "Admin")
                 {
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
                 }

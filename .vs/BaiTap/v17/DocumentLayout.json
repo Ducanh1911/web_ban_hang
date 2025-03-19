@@ -1,0 +1,121 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\ASP.NET\\BaiTap\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|d:\\asp.net\\baitap\\baitap\\areas\\customer\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\views\\cart\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\cart\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\models\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\models\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
+              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
+              "RelativeToolTip": "BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T10:27:16.322Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Models\\User.cs",
+              "RelativeDocumentMoniker": "BaiTap\\Models\\User.cs",
+              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Models\\User.cs",
+              "RelativeToolTip": "BaiTap\\Models\\User.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwCkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T10:16:30.149Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Product.cs",
+              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "BaiTap\\Models\\Product.cs",
+              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Models\\Product.cs",
+              "RelativeToolTip": "BaiTap\\Models\\Product.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAmwBwAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T09:37:54.18Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Cart.cs",
+              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Models\\Cart.cs",
+              "RelativeDocumentMoniker": "BaiTap\\Models\\Cart.cs",
+              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Models\\Cart.cs",
+              "RelativeToolTip": "BaiTap\\Models\\Cart.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T08:29:57.715Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAYwGgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-18T08:06:14.501Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Cart.cshtml",
+              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
+              "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
+              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
+              "RelativeToolTip": "BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-18T08:00:41.896Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

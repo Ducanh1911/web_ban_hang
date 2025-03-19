@@ -1,53 +1,35 @@
-﻿@model IEnumerable<BaiTap.Models.Cart>
+﻿@model  List<BaiTap.Models.Cart>
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Giỏ hàng";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Cart</title>
-</head>
-<body>
-    <table class="table">
+<h2>Giỏ hàng của bạn</h2>
+<table class="table">
+    <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.productName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.price)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.quantity)
-            </th>
-
-
-            <th></th>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Tổng tiền</th>
         </tr>
+    </thead>
+    <tbody>
+        @{ int stt = 1; }
 
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.productName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.quantity)
-                </td>
-
-                <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.cartId })
-                </td>
+                <td>@stt</td>
+                <td>@item.Product.productName</td>
+                <td>@item.Product.price</td>
+                <td>@item.quantity</td>
+                <td>@(item.quantity * item.Product.price)</td>
             </tr>
+            stt++;
         }
+    </tbody>
+</table>
 
-    </table>
-</body>
-</html>
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Tiếp tục mua sắm</a>

@@ -1,8 +1,7 @@
-﻿using BaiTap.Models;
-using System;
-using System.Collections.Generic;
+﻿using BaiTap.App_Start;
+using BaiTap.Models;
+using Dynamitey.DynamicObjects;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BaiTap.Areas.Customer.Controllers
@@ -15,62 +14,48 @@ namespace BaiTap.Areas.Customer.Controllers
         {
             _db = db;
         }
+
         public ActionResult Cart()
         {
-            return View(_db.Carts.ToList());
-        }
-    // Thêm sản phẩm vào giỏ hàng
-    public ActionResult AddToCart(int id)
-        {
-            // Kiểm tra sản phẩm có tồn tại trong cơ sở dữ liệu không
-            var product = _db.Products.FirstOrDefault(p => p.productId == id);
-            if (product == null)
+            var userId = SessionConfig.GetUserId();
+            if (userId == null)
             {
-                return HttpNotFound();
+                return Redirect("~/User/Login");
+            }
+            var Cart = _db.Carts
+            .Where(c => c.userId == userId)
+            .ToList();
+            return View(Cart);
+        }
+
+        [HttpPost]
+        public ActionResult AddToCart(int productId, int quantity)
+        {
+            var userId = SessionConfig.GetUserId();
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "User");
             }
 
-            // Kiểm tra xem người dùng đã đăng nhập hay chưa (nếu có)
+            var cartItem = _db.Carts.FirstOrDefault(c => c.userId == userId && c.productId == productId);
 
-            // Kiểm tra giỏ hàng của người dùng trong database
-            var cartItem = _db.Carts.FirstOrDefault(c => c.productId == id );
-
-            if (cartItem == null)
+            if (cartItem != null)
             {
-                // Nếu chưa có sản phẩm này trong giỏ, thêm mới
-                _db.Carts.Add(new Cart
-                {
-                    productId = product.productId,
-                    quantity = 1,
-                });
+                cartItem.quantity += quantity;
             }
             else
             {
-                // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
-                cartItem.quantity++;
+                var newCartItem = new Cart
+                {
+                    userId = userId,
+                    productId = productId,
+                    quantity = quantity,
+                    createdAt = System.DateTime.Now
+                };
+                _db.Carts.Add(newCartItem);
             }
-
-            // Lưu giỏ hàng vào cơ sở dữ liệu
             _db.SaveChanges();
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Cart");
         }
-        // Xóa sản phẩm khỏi giỏ hàng
-        public ActionResult Delete(int id)
-        {
-            var cartItem = _db.Carts.FirstOrDefault(c => c.cartId == id);
-            if (cartItem != null)
-            {
-                _db.Carts.Remove(cartItem);
-                _db.SaveChanges();
-            }
-
-            return RedirectToAction("Index");
-        }
-
     }
-
-        
-
-    }
-
-
+}

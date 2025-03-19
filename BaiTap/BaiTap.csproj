@@ -2133,11 +2133,13 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\LoadProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
-    <Content Include="Areas\Customer\Views\Home\Detail.cshtml" />
+    <Content Include="Areas\Customer\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Customer\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Customer\Views\Cart\Cart.cshtml" />
+    <Content Include="Areas\Customer\Views\Home\Detail.cshtml" />
+    <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -2171,7 +2173,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Content\" />
-    <Folder Include="Areas\Customer\Views\Shared\" />
     <Folder Include="Img\" />
   </ItemGroup>
   <ItemGroup>

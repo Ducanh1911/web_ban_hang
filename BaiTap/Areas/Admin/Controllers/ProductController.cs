@@ -6,20 +6,33 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Tokenizer.Symbols;
+using PagedList;
+
 
 namespace BaiTap.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
+        public readonly ShopEntities _db;
         private readonly ProductService _productService;
-        public ProductController(ProductService productService)
+        public ProductController(ShopEntities db, ProductService productService)
         {
+            _db = db;
             _productService = productService;
         }
-        public ActionResult LoadProduct()
+        public ActionResult LoadProduct(int? page, string search = "")
         {
-            System.Diagnostics.Debug.WriteLine("LoadProduct");
-            return View(_productService.GetProducts());
+            int pageSize = 5; // Số sản phẩm trên mỗi trang
+            int pageNumber = (page ?? 1); // Trang mặc định là 1
+
+            var products = _productService.GetProducts()
+                            .Where(p => p.productName.Contains(search) || string.IsNullOrEmpty(search))
+                            .OrderBy(p => p.productId)
+                            .ToPagedList(pageNumber, pageSize);
+
+            ViewBag.Search = search; // Giữ lại từ khóa tìm kiếm khi chuyển trang
+            return View(products);
         }
         //upload file
         public string UploadFile(HttpPostedFileBase file)

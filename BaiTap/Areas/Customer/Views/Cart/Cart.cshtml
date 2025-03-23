@@ -1,18 +1,22 @@
 ﻿@model  List<BaiTap.Models.Cart>
-
 @{
-    ViewBag.Title = "Giỏ Hàngg";
+    ViewBag.Title = "Giỏ Hàng";
 }
 
 <h2>Giỏ hàng của bạn</h2>
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
 <table class="table">
     <thead>
         <tr>
             <th>STT</th>
             <th>Tên sản phẩm</th>
+            <th>Hình ảnh</th>
             <th>Giá</th>
             <th>Số lượng</th>
             <th>Tổng tiền</th>
+            <th>Action</th>
+            <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -23,13 +27,80 @@
             <tr>
                 <td>@stt</td>
                 <td>@item.Product.productName</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Product.imageUrl))
+                    {
+                        <img src="@Url.Content(item.Product.imageUrl)" alt="Image" style="width: 100px; height: auto;" />
+                    }
+                    else
+                    {
+                        <span>No image</span>
+                    }
+                </td>
                 <td>@item.Product.price</td>
-                <td>@item.quantity</td>
-                <td>@(item.quantity * item.Product.price)</td>
+                <td>
+                    <form action="@Url.Action("UpdateQuantity", "Cart")" method="post" style="display: inline;">
+                        <input type="hidden" name="productId" value="@item.productId" />
+                        <input type="hidden" name="change" value="-1" />
+                        <button type="submit">-</button>
+                    </form>
+
+                    <span>@item.quantity</span>
+
+                    <form action="@Url.Action("UpdateQuantity", "Cart")" method="post" style="display: inline;">
+                        <input type="hidden" name="productId" value="@item.productId" />
+                        <input type="hidden" name="change" value="1" />
+                        <button type="submit">+</button>
+                    </form>
+                </td>
+                <td id="total-@item.productId">@(item.quantity * item.Product.price)</td>
+
+                <td>
+                    <form action="@Url.Action("RemoveCart", "Cart")" method="post" onsubmit="return confirmDelete(@item.productId);">
+                        <input type="hidden" name="productId" value="@item.productId" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <input type="checkbox" name="selectedProducts" value="@item.Product.productId" />
+                    <label for="selectedProducts"></label>
+                </td>
             </tr>
             stt++;
         }
     </tbody>
 </table>
 
-<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Tiếp tục mua sắm</a>
+<h4>Tổng tiền: <span id="totalAmount">0</span> VNĐ</h4>
+<a href="@Url.Action("Checkout", "Cart")" class="btn btn-primary">Mua ngay</a>
+
+<script>
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('input[name="selectedProducts"]:checked').forEach(checkbox => {
+            let productId = checkbox.value;
+            let totalPrice = document.getElementById("total-" + productId).innerText;
+            total += parseInt(totalPrice);
+        });
+        document.getElementById("totalAmount").innerText = total.toLocaleString();
+    }
+
+    document.querySelectorAll('input[name="selectedProducts"]').forEach(checkbox => {
+        checkbox.addEventListener("change", updateTotal);
+    });
+</script>
+
+
+
+<script>
+
+    function confirmDelete(url) {
+        if (confirm("Xoá sản phẩm này khỏi giỏ hàng?")) {
+            window.location.href = url;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>

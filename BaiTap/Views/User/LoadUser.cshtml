@@ -10,25 +10,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.fullName)
+            Tên
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.email)
+            email
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.passwordHash)
+            Mật khẩu
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.phoneNumber)
+            Số điện thoại
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.address)
+            Địa chỉ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.role)
+            Chức vụ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.createdAt)
+            Ngày tạo
         </th>
         <th></th>
     </tr>
@@ -58,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.createdAt)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.userId }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.userId }) 
             </td>
         </tr>
     }

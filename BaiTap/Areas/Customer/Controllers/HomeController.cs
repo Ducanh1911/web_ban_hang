@@ -15,7 +15,6 @@ namespace BaiTap.Areas.Customer.Controllers
         {
             _db = db;
         }       
-        // GET: Customer/Home
         public ActionResult Index()
         {
             return View(_db.Products.ToList());

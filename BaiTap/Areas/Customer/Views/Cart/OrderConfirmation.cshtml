@@ -1,63 +1,38 @@
-﻿
+﻿@model BaiTap.Models.Order
+
 @{
-    ViewBag.Title = "OrderConfirmation";
+    ViewBag.Title = "Chi tiết đơn hàng";
 }
 
-@model BaiTap.Models.Order
+<h2>Đặt hàng thành công</h2>
 
-<h2>Chi tiết đơn hàng</h2>
+<p><strong>Mã đơn hàng:</strong> @Model.orderId</p>
+<p><strong>Ngày đặt:</strong> @(Model.orderDate?.ToString("dd/MM/yyyy HH:mm") ?? "Không có dữ liệu")</p>
+<p><strong>Địa chỉ nhận hàng:</strong> @Model.User.address</p>
+<p><strong>Số điện thoại:</strong> @Model.User.phoneNumber</p>
+<p><strong>Tổng tiền:</strong> @Model.totalAmount VNĐ</p>
 
-@if (Model != null)
-{
-    <form method="post">
-        <p>
-            <label>Mã đơn hàng</label>
-            <input type="text" value="@Model.orderId" readonly />
-        </p>
-        <p>
-            <label>Ngày đặt hàng</label>
-            <input type="text" value="@(Model.orderDate?.ToString("dd/MM/yyyy HH:mm") ?? "")" readonly />
-        </p>
-        <p>
-            <label>Địa Chỉ</label>
-            <input type="text" value="@(Model.User.address) " readonly/>
-        </p>
-        <p>
-            <label>Trạng thái</label>
-            <input type="text" value="@Model.status" readonly />
-        </p>
-
-        <h3>Danh sách sản phẩm</h3>
+<h3>Chi tiết đơn hàng</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Tổng</th>
+        </tr>
+    </thead>
+    <tbody>
         @foreach (var item in Model.OrderDetails)
         {
-            <p>
-                <label>Tên sản phẩm</label>
-                <input type="text" value="@item.Product.productName" readonly />
-            </p>
-            <p>
-                <label>Số lượng</label>
-                <input type="text" value="@item.quantity" readonly />
-            </p>
-            <p>
-                <label>Giá</label>
-                <input type="text" value="@item.price.ToString("N0") VNĐ" readonly />
-            </p>
-            <p>
-                <label>Thành tiền</label>
-                <input type="text" value="@item.subtotal.ToString("N0") VNĐ" readonly />
-            </p>
+            <tr>
+                <td>@item.Product.productName</td>
+                <td>@item.quantity</td>
+                <td>@item.price</td>
+                <td>@(item.quantity * item.price)</td>
+            </tr>
         }
+    </tbody>
+</table>
 
-        <p>
-            <label>Tổng tiền</label>
-            <input type="text" value="@Model.finalAmount.ToString("N0") VNĐ" readonly />
-        </p>
-
-        <a href="~/Customer/Home/Index" class="btn btn-primary">Quay lại</a>
-    </form>
-}
-else
-{
-    <p>Không tìm thấy thông tin đơn hàng!</p>
-}
-
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Về trang chủ</a>

@@ -5,6 +5,7 @@
 
 <h2>Giỏ hàng của bạn</h2>
 <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
+<a href="@Url.Action("Index", "Order")" class="btn btn-primary">Đơn hàng đã mua</a>
 <table class="table">
     <thead>
         <tr>
@@ -93,36 +94,32 @@
         checkbox.addEventListener("change", updateTotal);
     });
 
-    // submit checkout
-        function submitCheckout() {
-            let selectedProducts = [];
+    function submitCheckout() {
+        let selectedProducts = [];
         document.querySelectorAll('input[name="selectedProducts"]:checked').forEach(checkbox => {
             selectedProducts.push(checkbox.value);
         });
 
         if (selectedProducts.length === 0) {
-            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
-        return;
+            alert("Chọn ít nhất 1 sản phẩm");
+            return;
         }
-
-        document.getElementById("selectedProductIds").value = selectedProducts.join(",");
-        document.getElementById("checkoutForm").submit();
+        let confirmCheckout = confirm("Xác nhận mua các sản phẩm này");
+        if (confirmCheckout) {
+            document.getElementById("selectedProductIds").value = selectedProducts.join(",");
+            document.getElementById("checkoutForm").submit();
+        } else {
+            return;
+        }
     }
-</script>
-
-
-
-
-
-<script>
-
     function confirmDelete(url) {
-    if (confirm("Xoá sản phẩm này khỏi giỏ hàng?")) {
-        window.location.href = url;
-    return true;
+        if (confirm("Xoá sản phẩm này khỏi giỏ hàng")) {
+            window.location.href = url;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-    else {
-        return false;
-    }
-}
+
 </script>

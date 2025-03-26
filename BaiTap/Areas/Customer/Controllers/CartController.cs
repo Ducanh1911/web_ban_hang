@@ -99,18 +99,13 @@ namespace BaiTap.Areas.Customer.Controllers
         }
 
         // loi 
+        [HttpPost]
         public ActionResult Checkout(string selectedProductIds)
         {
             var userId = SessionConfig.GetUserId();
             if (userId == null)
             {
                 return Redirect("~/User/Login");
-            }
-
-            if (string.IsNullOrEmpty(selectedProductIds))
-            {
-                TempData["ErrorMessage"] = "Chọn ít nhất một sản phẩm!";
-                return RedirectToAction("Cart");
             }
 
             var productIds = selectedProductIds
@@ -125,7 +120,7 @@ namespace BaiTap.Areas.Customer.Controllers
 
             if (!cartItems.Any())
             {
-                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong giỏ hàng!";
+                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong giỏ hàng";
                 return RedirectToAction("Cart");
             }
 
@@ -144,12 +139,14 @@ namespace BaiTap.Areas.Customer.Controllers
                     subtotal = c.quantity * c.Product.price
                 }).ToList()
             };
-
             _db.Orders.Add(newOrder);
+            _db.Carts.RemoveRange(cartItems);
             _db.SaveChanges();
-
             return RedirectToAction("OrderConfirmation", new { orderId = newOrder.orderId });
+
         }
+        
+
 
 
 

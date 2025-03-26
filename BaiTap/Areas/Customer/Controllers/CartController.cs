@@ -4,7 +4,7 @@ using Dynamitey.DynamicObjects;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-
+using System.Data.Entity;
 namespace BaiTap.Areas.Customer.Controllers
 {
     public class CartController : Controller
@@ -83,6 +83,20 @@ namespace BaiTap.Areas.Customer.Controllers
             }
             return RedirectToAction("Cart");
         }
+        public ActionResult OrderConfirmation(int orderId)
+        {
+            var order = _db.Orders
+                .Include(o => o.OrderDetails.Select(od => od.Product))
+                .FirstOrDefault(o => o.orderId == orderId);
+
+            if (order == null)
+            {
+                TempData["ErrorMessage"] = "Đơn hàng không tồn tại!";
+                return RedirectToAction("Cart");
+            }
+
+            return View(order);
+        }
 
         // loi 
         public ActionResult Checkout(string selectedProductIds)
@@ -99,17 +113,44 @@ namespace BaiTap.Areas.Customer.Controllers
                 return RedirectToAction("Cart");
             }
 
-            var productIds = selectedProductIds.Split(',').Select(int.Parse).ToList();
+            var productIds = selectedProductIds
+                .Split(',')
+                .Where(id => int.TryParse(id, out _))
+                .Select(int.Parse)
+                .ToList();
+
             var cartItems = _db.Carts
                 .Where(c => c.userId == userId && productIds.Contains(c.productId))
-                .Select(c => new OrderDetail
+                .ToList();
+
+            if (!cartItems.Any())
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong giỏ hàng!";
+                return RedirectToAction("Cart");
+            }
+
+            var newOrder = new Order
+            {
+                userId = userId.Value,
+                orderDate = DateTime.Now,
+                totalAmount = cartItems.Sum(c => c.quantity * c.Product.price),
+                finalAmount = cartItems.Sum(c => c.quantity * c.Product.price),
+                status = "Pending",
+                OrderDetails = cartItems.Select(c => new OrderDetail
                 {
-                }).ToList();
+                    productId = c.productId,
+                    quantity = c.quantity,
+                    price = c.Product.price,
+                    subtotal = c.quantity * c.Product.price
+                }).ToList()
+            };
 
-            var orderViewModel = new Order { };
+            _db.Orders.Add(newOrder);
+            _db.SaveChanges();
 
-            return View(orderViewModel);
+            return RedirectToAction("OrderConfirmation", new { orderId = newOrder.orderId });
         }
+
 
 
     }

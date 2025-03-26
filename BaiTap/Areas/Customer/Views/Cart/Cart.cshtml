@@ -72,7 +72,11 @@
 </table>
 
 <h4>Tổng tiền: <span id="totalAmount">0</span> VNĐ</h4>
-<a href="@Url.Action("Checkout", "Cart")" class="btn btn-primary">Mua ngay</a>
+<form id="checkoutForm" action="@Url.Action("Checkout", "Cart")" method="post">
+    <input type="hidden" name="selectedProductIds" id="selectedProductIds" value="" />
+    <button type="button" class="btn btn-primary" onclick="submitCheckout()">Mua ngay</button>
+</form>
+
 
 <script>
     function updateTotal() {
@@ -88,19 +92,37 @@
     document.querySelectorAll('input[name="selectedProducts"]').forEach(checkbox => {
         checkbox.addEventListener("change", updateTotal);
     });
+
+    // submit checkout
+        function submitCheckout() {
+            let selectedProducts = [];
+        document.querySelectorAll('input[name="selectedProducts"]:checked').forEach(checkbox => {
+            selectedProducts.push(checkbox.value);
+        });
+
+        if (selectedProducts.length === 0) {
+            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+        return;
+        }
+
+        document.getElementById("selectedProductIds").value = selectedProducts.join(",");
+        document.getElementById("checkoutForm").submit();
+    }
 </script>
+
+
 
 
 
 <script>
 
     function confirmDelete(url) {
-        if (confirm("Xoá sản phẩm này khỏi giỏ hàng?")) {
-            window.location.href = url;
-            return true;
-        }
-        else {
-            return false;
-        }
+    if (confirm("Xoá sản phẩm này khỏi giỏ hàng?")) {
+        window.location.href = url;
+    return true;
     }
+    else {
+        return false;
+    }
+}
 </script>

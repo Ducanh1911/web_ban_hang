@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "OrderConfirmation";
+}
+
+@model BaiTap.Models.Order
+
+<h2>Chi tiết đơn hàng</h2>
+
+@if (Model != null)
+{
+    <form method="post">
+        <p>
+            <label>Mã đơn hàng</label>
+            <input type="text" value="@Model.orderId" readonly />
+        </p>
+        <p>
+            <label>Ngày đặt hàng</label>
+            <input type="text" value="@(Model.orderDate?.ToString("dd/MM/yyyy HH:mm") ?? "")" readonly />
+        </p>
+        <p>
+            <label>Địa Chỉ</label>
+            <input type="text" value="@(Model.User.address) " readonly/>
+        </p>
+        <p>
+            <label>Trạng thái</label>
+            <input type="text" value="@Model.status" readonly />
+        </p>
+
+        <h3>Danh sách sản phẩm</h3>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <p>
+                <label>Tên sản phẩm</label>
+                <input type="text" value="@item.Product.productName" readonly />
+            </p>
+            <p>
+                <label>Số lượng</label>
+                <input type="text" value="@item.quantity" readonly />
+            </p>
+            <p>
+                <label>Giá</label>
+                <input type="text" value="@item.price.ToString("N0") VNĐ" readonly />
+            </p>
+            <p>
+                <label>Thành tiền</label>
+                <input type="text" value="@item.subtotal.ToString("N0") VNĐ" readonly />
+            </p>
+        }
+
+        <p>
+            <label>Tổng tiền</label>
+            <input type="text" value="@Model.finalAmount.ToString("N0") VNĐ" readonly />
+        </p>
+
+        <a href="~/Customer/Home/Index" class="btn btn-primary">Quay lại</a>
+    </form>
+}
+else
+{
+    <p>Không tìm thấy thông tin đơn hàng!</p>
+}
+

@@ -6,7 +6,7 @@
     Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
 
 }
-
+@Html.ValidationSummary(true);
 <!DOCTYPE html>
 
 <html>
@@ -83,7 +83,7 @@
                     @Html.DisplayFor(modelItem => item.Category.categoryName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.productId })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.productId })|
                     @Html.ActionLink("Delete", "Delete", new { id = item.productId }, new { onclick = "return confirmDelete(" + item.productId + ");" })
                 </td>
             </tr>
@@ -182,4 +182,5 @@
         });
     });
 </script>
+@Scripts.Render("~/bundles/jquery")
 

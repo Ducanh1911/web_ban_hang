@@ -23,15 +23,15 @@ namespace BaiTap.Areas.Admin.Controllers
         }
         public ActionResult LoadProduct(int? page, string search = "")
         {
-            int pageSize = 5; // Số sản phẩm trên mỗi trang
-            int pageNumber = (page ?? 1); // Trang mặc định là 1
+            int pageSize = 5; 
+            int pageNumber = (page ?? 1); 
 
             var products = _productService.GetProducts()
                             .Where(p => p.productName.Contains(search) || string.IsNullOrEmpty(search))
                             .OrderBy(p => p.productId)
                             .ToPagedList(pageNumber, pageSize);
 
-            ViewBag.Search = search; // Giữ lại từ khóa tìm kiếm khi chuyển trang
+            ViewBag.Search = search; 
             return View(products);
         }
         //upload file
@@ -92,8 +92,6 @@ namespace BaiTap.Areas.Admin.Controllers
                 return View(product);
             }
         }
-
-
         public ActionResult Delete(int id)
         {
             _productService.Delete(id);

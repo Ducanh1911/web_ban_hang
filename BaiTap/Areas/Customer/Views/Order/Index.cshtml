@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
 
 
 <table class="table">
@@ -16,10 +16,10 @@
             Tổng tiền
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.status)
+            Trạng thái
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.orderDate)
+            Ngày đặt đơn
         </th>
         <th></th>
     </tr>
@@ -40,7 +40,8 @@
                 @Html.DisplayFor(modelItem => item.orderDate)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.orderId }, new { onclick = "return confirmDelete(" + item.orderId + ");" })
+                <a href="" class="btn btn-primary">Thanh toán</a>
+                @Html.ActionLink("Huỷ đơn hàng", "Delete", new { id = item.orderId }, new { @class = "btn btn-primary", onclick = "return confirmDelete(" + item.orderId + ");" })
             </td>
         </tr>
     }

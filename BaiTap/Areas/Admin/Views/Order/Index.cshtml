@@ -8,7 +8,7 @@
 <table class="table">
     <tr>
         <th>STT</th>
-        <th>UserId</th>
+        <th>Email</th>
          <th>Địa chỉ</th>
         <th>
             Thành tiền
@@ -26,7 +26,7 @@
     <tr>
         <td>@stt</td>
         <td>
-            @Html.DisplayFor(modelItem => item.userId)
+            @Html.DisplayFor(modelItem => item.User.email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.User.address)

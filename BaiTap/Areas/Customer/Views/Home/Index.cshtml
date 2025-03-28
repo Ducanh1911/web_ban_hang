@@ -35,11 +35,10 @@
                         <span>@($"{item.price:C}")</span>
                     }
                 </p>
-                <a href="@Url.Action("Detail", "Home", new { id = item.productId })" class="btn btn-primary">Mua Ngay</a>
                 <form action="@Url.Action("AddToCart", "Cart")" method="post">
                     <input type="hidden" name="productId" value="@item.productId" />
                     <input type="hidden" name="quantity" value="1" />
-                    <button type="submit" class="btn btn-primary">Thêm</button>
+                    <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
                 </form>
             </div>
         </div>

@@ -14,7 +14,6 @@
 <table class="table">
     <tr>
         <th>STT</th>
-        <th>UserId</th>
         <th>Sản phẩm</th>
         <th>
             số lượng
@@ -37,9 +36,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>@STT</td>
-        <td>
-            @Html.DisplayFor(ModelItem => item.User.userId)
-        </td>
+      
         <td>
             @Html.DisplayFor(ModelItem => item.Product.productName)
         </td>

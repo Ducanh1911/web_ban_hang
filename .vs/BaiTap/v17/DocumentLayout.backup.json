@@ -1,69 +1,69 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\ASP.NET\\BaiTap\\",
+  "WorkspaceRootPath": "D:\\web_ban_hang\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|d:\\asp.net\\baitap\\baitap\\areas\\admin\\views\\product\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\views\\product\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\views\\cart\\orderconfirmation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\cart\\orderconfirmation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|d:\\asp.net\\baitap\\baitap\\areas\\customer\\views\\home\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\home\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\views\\cart\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\cart\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|d:\\asp.net\\baitap\\baitap\\areas\\admin\\views\\orderdetail\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\views\\orderdetail\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|d:\\asp.net\\baitap\\baitap\\areas\\admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|d:\\web_ban_hang\\baitap\\areas\\admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\admin\\views\\product\\loadproduct.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\admin\\views\\orderdetail\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\views\\orderdetail\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\admin\\views\\product\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\views\\product\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\views\\home\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\home\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\views\\cart\\orderconfirmation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\cart\\orderconfirmation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\views\\cart\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\views\\cart\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\admin\\views\\product\\loadproduct.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\views\\product\\loadproduct.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\admin\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\admin\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\controllers\\orderdetailcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\admin\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\admin\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\admin\\repository\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\admin\\repository\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\admin\\repository\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|d:\\asp.net\\baitap\\baitap\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\ASP.NET\\BaiTap\\baitap\\areas\\customer\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|D:\\web_ban_hang\\baitap\\areas\\customer\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C93B3935-0464-4BF6-9BA9-70930D0A7CB0}|BaiTap\\BaiTap.csproj|solutionrelative:baitap\\areas\\customer\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -74,197 +74,184 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Detail.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Home\\Detail.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Home\\Detail.cshtml",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Views\\Home\\Detail.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Home\\Detail.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Home\\Detail.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Customer\\Views\\Home\\Detail.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-28T12:24:24.499Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-28T12:24:24.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
+              "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
+              "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-28T12:23:41.658Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
+              "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
+              "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-28T12:13:05.586Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
-              "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
-              "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\Product\\Edit.cshtml",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAswGYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-28T12:23:41.658Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
-              "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
-              "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-28T12:13:05.586Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\Order\\Index.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\Order\\Index.cshtml",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Views\\Order\\Index.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\Order\\Index.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\Order\\Index.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\Order\\Index.cshtml",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAABwAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAABgAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-28T12:12:03.875Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Order\\Index.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Order\\Index.cshtml",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Views\\Order\\Index.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Order\\Index.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Order\\Index.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Customer\\Views\\Order\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-26T13:30:33.623Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T13:30:33.623Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T13:29:03.818Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "OrderController.cs",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
-              "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
-              "RelativeToolTip": "BaiTap\\Areas\\Customer\\Controllers\\OrderController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T13:29:03.818Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Customer\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-26T13:09:19.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T13:09:19.016Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "OrderConfirmation.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Cart\\OrderConfirmation.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Cart\\OrderConfirmation.cshtml",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Views\\Cart\\OrderConfirmation.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Cart\\OrderConfirmation.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Cart\\OrderConfirmation.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Customer\\Views\\Cart\\OrderConfirmation.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-25T12:50:13.17Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T12:50:13.17Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Cart.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Customer\\Views\\Cart\\Cart.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-21T13:45:23.68Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T13:45:23.68Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
               "Title": "OrderController.cs",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Controllers\\OrderController.cs",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Controllers\\OrderController.cs",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Controllers\\OrderController.cs",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Controllers\\OrderController.cs",
               "RelativeToolTip": "BaiTap\\Areas\\Admin\\Controllers\\OrderController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T13:46:13.837Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T13:46:13.837Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
               "Title": "ProductRepository.cs",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Repository\\ProductRepository.cs",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Repository\\ProductRepository.cs",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Repository\\ProductRepository.cs",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Repository\\ProductRepository.cs",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Repository\\ProductRepository.cs",
               "RelativeToolTip": "BaiTap\\Areas\\Admin\\Repository\\ProductRepository.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABwAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T13:39:51.512Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T13:39:51.512Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "LoadProduct.cshtml",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\Product\\LoadProduct.cshtml",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\Product\\LoadProduct.cshtml",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Views\\Product\\LoadProduct.cshtml",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Views\\Product\\LoadProduct.cshtml",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\Product\\LoadProduct.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\Product\\LoadProduct.cshtml",
               "ViewState": "AgIAAF0AAAAAAAAAAAAwwDoAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-26T02:15:46.946Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T02:15:46.946Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
               "Title": "CartController.cs",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
               "RelativeToolTip": "BaiTap\\Areas\\Customer\\Controllers\\CartController.cs",
               "ViewState": "AgIAAFwAAAAAAAAAAAAswJsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T13:35:49.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-23T13:35:49.249Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
               "Title": "OrderDetailController.cs",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Controllers\\OrderDetailController.cs",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Controllers\\OrderDetailController.cs",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Controllers\\OrderDetailController.cs",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Admin\\Controllers\\OrderDetailController.cs",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Controllers\\OrderDetailController.cs",
               "RelativeToolTip": "BaiTap\\Areas\\Admin\\Controllers\\OrderDetailController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T13:46:16.913Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T13:46:16.913Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 15,
               "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\HomeController.cs",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Customer\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Areas\\Customer\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Customer\\Controllers\\HomeController.cs",
               "RelativeToolTip": "BaiTap\\Areas\\Customer\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -274,14 +261,13 @@
               "$type": "Document",
               "DocumentIndex": 14,
               "Title": "UserRepository.cs",
-              "DocumentMoniker": "D:\\ASP.NET\\BaiTap\\BaiTap\\Repository\\UserRepository.cs",
+              "DocumentMoniker": "D:\\web_ban_hang\\BaiTap\\Repository\\UserRepository.cs",
               "RelativeDocumentMoniker": "BaiTap\\Repository\\UserRepository.cs",
-              "ToolTip": "D:\\ASP.NET\\BaiTap\\BaiTap\\Repository\\UserRepository.cs",
+              "ToolTip": "D:\\web_ban_hang\\BaiTap\\Repository\\UserRepository.cs",
               "RelativeToolTip": "BaiTap\\Repository\\UserRepository.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T13:57:53.827Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T13:57:53.827Z"
             }
           ]
         }

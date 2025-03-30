@@ -113,6 +113,57 @@
     }
 </script>
 
+@if (TempData["AddSuccessMessage"] != null)
+{
+    <div class="toast show position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1050; background-color: #ffffff;" role="alert">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            @TempData["AddSuccessMessage"]
+        </div>
+    </div>
+}
+
+@if (TempData["EditSuccessMessage"] != null)
+{
+    <div class="toast show position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1050; background-color: #ffffff;" role="alert">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            @TempData["EditSuccessMessage"]
+        </div>
+    </div>
+}
+
+@if (TempData["DeleteSuccessMessage"] != null)
+{
+    <div class="toast show position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1050; background-color: #ffffff;" role="alert">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            @TempData["DeleteSuccessMessage"]
+        </div>
+    </div>
+}
+
+
+<script>
+    setTimeout(function () {
+        var toast = document.querySelector('.toast');
+        if (toast) {
+            var bsToast = new bootstrap.Toast(toast);
+            bsToast.hide();
+        }
+    }, 3000);
+</script>
+
+
 @*thêm sản phẩm*@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="addProductDrawer" aria-labelledby="offcanvasLabel">
     <div class="offcanvas-header">
@@ -183,4 +234,3 @@
     });
 </script>
 @Scripts.Render("~/bundles/jquery")
-

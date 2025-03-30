@@ -1,4 +1,5 @@
-﻿using BaiTap.Areas.Admin.Servive;
+﻿
+using BaiTap.Areas.Admin.Servive;
 using BaiTap.Models;
 using System;
 using System.Collections.Generic;
@@ -23,15 +24,15 @@ namespace BaiTap.Areas.Admin.Controllers
         }
         public ActionResult LoadProduct(int? page, string search = "")
         {
-            int pageSize = 5; 
-            int pageNumber = (page ?? 1); 
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
 
             var products = _productService.GetProducts()
                             .Where(p => p.productName.Contains(search) || string.IsNullOrEmpty(search))
                             .OrderBy(p => p.productId)
                             .ToPagedList(pageNumber, pageSize);
 
-            ViewBag.Search = search; 
+            ViewBag.Search = search;
             return View(products);
         }
         //upload file
@@ -59,10 +60,14 @@ namespace BaiTap.Areas.Admin.Controllers
                 product.imageUrl = imageUrl;
             }
 
-            if (_productService.Add(product) == true) {
+            if (_productService.Add(product) == true)
+            {
+                TempData["AddSuccessMessage"] = "Thêm sản phẩm thành công!";
                 return Redirect("~/Admin/Product/LoadProduct");
+
             }
-            else {
+            else
+            {
                 return View(product);
             }
         }
@@ -85,6 +90,7 @@ namespace BaiTap.Areas.Admin.Controllers
             }
             if (_productService.Update(product) == true)
             {
+                TempData["EditSuccessMessage"] = "Cập nhật sản phẩm thành công!";
                 return Redirect("~/Admin/Product/LoadProduct");
             }
             else
@@ -95,7 +101,19 @@ namespace BaiTap.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             _productService.Delete(id);
+            TempData["EditSuccessMessage"] = "Xoá sản phẩm thành công!";
             return Redirect("~/Admin/Product/LoadProduct");
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -108,9 +108,10 @@
               "RelativeDocumentMoniker": "BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
               "ToolTip": "D:\\web_ban_hang\\BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
               "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\OrderDetail\\Index.cshtml",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADQAAAAAAAAAAEBVwBAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-28T12:13:05.586Z"
+              "WhenOpened": "2025-03-28T12:13:05.586Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -219,7 +220,8 @@
               "RelativeToolTip": "BaiTap\\Areas\\Admin\\Views\\Product\\LoadProduct.cshtml",
               "ViewState": "AgIAAF0AAAAAAAAAAAAwwDoAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-26T02:15:46.946Z"
+              "WhenOpened": "2025-03-26T02:15:46.946Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

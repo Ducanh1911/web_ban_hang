@@ -4,10 +4,11 @@
     "\\BaiTap",
     "\\BaiTap\\Areas",
     "\\BaiTap\\Areas\\Admin",
+    "\\BaiTap\\Areas\\Admin\\Controllers",
     "\\BaiTap\\Areas\\Admin\\Views",
     "\\BaiTap\\Areas\\Admin\\Views\\Order",
     "\\BaiTap\\Areas\\Admin\\Views\\Product"
   ],
-  "SelectedNode": "\\BaiTap\\Areas\\Admin\\Views\\Order\\Index.cshtml",
+  "SelectedNode": "\\BaiTap\\Web.config",
   "PreviewInSolutionExplorer": false
 }

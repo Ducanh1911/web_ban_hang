@@ -229,6 +229,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Service\MomoService.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2180,6 +2181,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Content\" />
+    <Folder Include="Areas\Customer\Views\Payment\" />
     <Folder Include="Img\" />
   </ItemGroup>
   <ItemGroup>

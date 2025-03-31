@@ -1,44 +1,27 @@
-﻿using BaiTap.App_Start;
-using BaiTap.Models;
+﻿using BaiTap.Models;
 using BaiTap.Service;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Diagnostics;
 
 namespace BaiTap.Areas.Customer.Controllers
 {
-    public class OrderController : Controller
+    public class PaymentController : Controller
     {
+
         private readonly ShopEntities _db;
         private readonly MomoService _momoService;
 
-        public OrderController(ShopEntities db)
+        public PaymentController(ShopEntities db)
         {
             _db = db;
             _momoService = new MomoService();
         }
-        // GET: Customer/Order
-        public ActionResult Index()
-        {
-            var userId = SessionConfig.GetUserId();
-            var orders = _db.Orders
-                .Where(o => o.userId == userId)
-                .ToList();
-
-            return View(orders);
-        }
-        public ActionResult Delete(int id)
-        {
-            var ds = _db.Orders.Find(id);
-            _db.Orders.Remove(ds);
-            _db.SaveChanges();
-            return RedirectToAction("index");
-        }
-
+        // GET: Customer/Payment
         [HttpPost]
         public async Task<ActionResult> PayWithMomo(int orderId)
         {
@@ -75,14 +58,14 @@ namespace BaiTap.Areas.Customer.Controllers
         }
 
         public ActionResult MomoReturn(
-            string partnerCode, 
-            string orderId, 
+            string partnerCode,
+            string orderId,
             string requestId,
-            string amount, 
+            string amount,
             string orderInfo,
             string orderType,
             string transId,
-            string resultCode, 
+            string resultCode,
             string message,
             string payType,
             string responseTime,
@@ -95,7 +78,7 @@ namespace BaiTap.Areas.Customer.Controllers
 
                 // Validate signature
                 var rawHash = $"accessKey={_momoService.AccessKey}&amount={amount}&extraData={extraData}&message={message}&orderId={orderId}&orderInfo={orderInfo}&orderType={orderType}&partnerCode={partnerCode}&payType={payType}&requestId={requestId}&responseTime={responseTime}&resultCode={resultCode}&transId={transId}";
-                
+
                 if (!_momoService.ValidateSignature(rawHash, signature))
                 {
                     Debug.WriteLine("Invalid signature received");
@@ -152,7 +135,7 @@ namespace BaiTap.Areas.Customer.Controllers
 
                 // Validate signature
                 var rawHash = $"accessKey={_momoService.AccessKey}&amount={amount}&extraData={extraData}&message={message}&orderId={orderId}&orderInfo={orderInfo}&orderType={orderType}&partnerCode={partnerCode}&payType={payType}&requestId={requestId}&responseTime={responseTime}&resultCode={resultCode}&transId={transId}";
-                
+
                 if (!_momoService.ValidateSignature(rawHash, signature))
                 {
                     Debug.WriteLine("Invalid signature received in IPN");
@@ -164,7 +147,7 @@ namespace BaiTap.Areas.Customer.Controllers
                     var order = _db.Orders.Find(int.Parse(orderId));
                     if (order != null)
                     {
-                        order.status = "Paid";
+                        order.status = "Processing";
                         _db.SaveChanges();
                         Debug.WriteLine($"Order {orderId} marked as paid via IPN");
                     }

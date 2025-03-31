@@ -1,11 +1,24 @@
 ﻿@model IEnumerable<BaiTap.Models.Order>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Đơn hàng của tôi";
 }
 
 <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <table class="table">
     <tr>
@@ -40,22 +53,72 @@
                 @Html.DisplayFor(modelItem => item.orderDate)
             </td>
             <td>
-                <a href="" class="btn btn-primary">Thanh toán</a>
-                @Html.ActionLink("Huỷ đơn hàng", "Delete", new { id = item.orderId }, new { @class = "btn btn-primary", onclick = "return confirmDelete(" + item.orderId + ");" })
+                @if (item.status != "Paid")
+                {
+                    <button class="btn btn-primary pay-momo" data-order-id="@item.orderId">Thanh toán MOMO</button>
+                }
+                @Html.ActionLink("Huỷ đơn hàng", "Delete", new { id = item.orderId }, new { @class = "btn btn-danger", onclick = "return confirmDelete();" })
             </td>
         </tr>
     }
-
 </table>
 
-<script>
+<!-- Modal hiển thị QR code -->
+<div class="modal fade" id="momoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thanh toán bằng MOMO</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Quét mã QR bằng ứng dụng MOMO để thanh toán</p>
+                <div id="qrcode"></div>
+                <div class="mt-3">
+                    <a id="openMomo" href="#" class="btn btn-primary" target="_blank">Mở ứng dụng MOMO</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    function confirmDelete(url) {
-        if (confirm("Bạn muốn xoá sản phẩm này?")) {
-            window.location.href = url;
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        function confirmDelete() {
+            return confirm("Bạn có chắc muốn huỷ đơn hàng này?");
         }
-        else {
-            return false;
-        }
-    }
-</script>
+
+        $(document).ready(function () {
+            $('.pay-momo').click(function () {
+                var orderId = $(this).data('order-id');
+                
+                $.ajax({
+                    url: '@Url.Action("PayWithMomo")',
+                    type: 'POST',
+                    data: { orderId: orderId },
+                    success: function (response) {
+                        if (response.success) {
+                            // Tạo QR code
+                            $('#qrcode').empty();
+                            new QRCode(document.getElementById("qrcode"), response.paymentUrl);
+                            
+                            // Cập nhật link mở app
+                            $('#openMomo').attr('href', response.paymentUrl);
+                            
+                            // Hiển thị modal
+                            $('#momoModal').modal('show');
+                        } else {
+                            alert('Có lỗi xảy ra: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi kết nối với server');
+                    }
+                });
+            });
+        });
+    </script>
+}

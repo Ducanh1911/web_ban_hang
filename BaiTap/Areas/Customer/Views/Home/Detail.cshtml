@@ -1,9 +1,9 @@
 ﻿﻿@model BaiTap.Models.Product
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
 <div class="product-detail">
     <img src="@Url.Content(Model.imageUrl)" alt="@Model.productName" class="product-detail-image">
     <div class="product-detail-info">
@@ -22,7 +22,31 @@
 
         <p>@Model.description</p>
         <p><strong>Kho:</strong> @Model.stock sản phẩm</p>
-        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
+        <h5>Đánh giá sản phẩm</h5>
+        @{
+            var averageRating = Model.Reviews != null && Model.Reviews.Any()
+                ? (double)Model.Reviews.Average(r => r.rating)
+                : 0;
+        }
+        <p>
+            @for (int i = 1; i <= 5; i++)
+            {
+                if (i <= Math.Floor(averageRating))
+                {
+                    <i class="fas fa-star" style="color: gold;"></i> 
+                }
+                else if (i - 1 < averageRating)
+                {
+                    <i class="fas fa-star-half-alt" style="color: gold;"></i> 
+                }
+                else
+                {
+                    <i class="far fa-star" style="color: gold;"></i> 
+                }
+            }
+            <span>(@averageRating.ToString("0.0")/5)</span>
+        </p>
+
 
     </div>
 </div>

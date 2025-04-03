@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.orderDate)
             </td>
             <td>
-                @if (item.status != "Paid")
+                @if (item.status == "Pending")
                 {
                     <button class="btn btn-primary pay-momo" data-order-id="@item.orderId">Thanh toán MOMO</button>
                 }
@@ -117,6 +117,7 @@
                     error: function () {
                         alert('Có lỗi xảy ra khi kết nối với server');
                     }
+                     
                 });
             });
         });

@@ -6,7 +6,7 @@
 
 }
 
-<h2>Index</h2>
+<h2>Đơn hàng đã giao</h2>
 
 @{ 
     int STT = 1;
@@ -33,7 +33,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Where(o => o.Order.status == "shipped")) {
     <tr>
         <td>@STT</td>
       
@@ -55,9 +55,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Order.status)
         </td>
-        <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.orderDetailId })
-        </td>
+
     </tr>
     STT++;
 }

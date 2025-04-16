@@ -44,13 +44,16 @@
             @Html.DisplayFor(modelItem => item.quantity)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.price)
+            @String.Format("{0:N0}", item.price).Replace(",", ".")
+
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.discount)
+            @String.Format("{0:N0}", item.discount).Replace(",", ".")
+
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.subtotal)
+            @String.Format("{0:N0}", item.subtotal).Replace(",", ".")
+
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Order.status)

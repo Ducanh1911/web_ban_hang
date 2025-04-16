@@ -38,7 +38,7 @@
                         <span>No image</span>
                     }
                 </td>
-                <td>@item.Product.price</td>
+                <td>@item.Product.price.ToString("#,0").Replace(",", ".")</td>
                 <td>
                     <form action="@Url.Action("UpdateQuantity", "Cart")" method="post" style="display: inline;">
                         <input type="hidden" name="productId" value="@item.productId" />
@@ -54,7 +54,10 @@
                         <button type="submit">+</button>
                     </form>
                 </td>
-                <td id="total-@item.productId">@(item.quantity * item.Product.price)</td>
+                <td id="total-@item.productId">
+                    @(((decimal)item.quantity * (decimal)item.Product.price).ToString("#,0").Replace(",", "."))
+                </td>
+
 
                 <td>
                     <form action="@Url.Action("RemoveCart", "Cart")" method="post" onsubmit="return confirmDelete(@item.productId);">
@@ -84,8 +87,9 @@
         let total = 0;
         document.querySelectorAll('input[name="selectedProducts"]:checked').forEach(checkbox => {
             let productId = checkbox.value;
-            let totalPrice = document.getElementById("total-" + productId).innerText;
+            let totalPrice = document.getElementById("total-" + productId).innerText.replace(/\./g, '');
             total += parseInt(totalPrice);
+
         });
         document.getElementById("totalAmount").innerText = total.toLocaleString();
     }

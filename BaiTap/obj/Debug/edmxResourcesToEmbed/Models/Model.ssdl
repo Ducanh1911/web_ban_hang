@@ -140,6 +140,8 @@
     <Property Name="address" Type="nvarchar" MaxLength="255" />
     <Property Name="role" Type="nvarchar" MaxLength="20" />
     <Property Name="createdAt" Type="datetime" />
+    <Property Name="otp" Type="nvarchar" MaxLength="10" />
+    <Property Name="otpExpiry" Type="datetime" />
   </EntityType>
   <Association Name="FK__Cart__productId__18EBB532">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />

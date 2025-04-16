@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 namespace BaiTap.Areas.Customer.Controllers
 {
+    [RoleUser]
     public class CartController : Controller
     {
         private readonly ShopEntities _db;
@@ -98,7 +99,6 @@ namespace BaiTap.Areas.Customer.Controllers
             return View(order);
         }
 
-        // loi 
         [HttpPost]
         public ActionResult Checkout(string selectedProductIds)
         {

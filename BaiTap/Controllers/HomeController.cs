@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BaiTap.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +7,7 @@ using System.Web.Mvc;
 
 namespace BaiTap.Controllers
 {
-
+    [RoleUser]
     public class Home1Controller : Controller
     {
         public ActionResult Index()

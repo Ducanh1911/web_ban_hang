@@ -1,106 +1,153 @@
-﻿﻿@model IEnumerable<BaiTap.Models.Product>
+﻿@model IEnumerable<BaiTap.Models.Product>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center">Danh sách sản phẩm</h2>
-<a class="btn btn-primary" href="~/Customer/Cart/Cart">Giỏ Hàng</a>
-<div class="product-grid">
-    @foreach (var item in Model)
-    {
-        <div class="product-card">
-            <div class="product-image">
-                <a href="@Url.Action("Detail", "Home", new { id = item.productId })">
-                    @if (!string.IsNullOrEmpty(item.imageUrl))
-                    {
-                        <img src="@Url.Content(item.imageUrl)" alt="@item.productName">
-                    }
-                    else
-                    {
-                        <img src="~/images/no-image.png" alt="No Image">
-                    }
-                </a>
-            </div>
-            <div class="product-info">
-                <h3>@item.productName</h3>
-                <p class="price">
-                    @if (item.discount > 0)
-                    {
-                        <span class="original-price">@($"{item.price:C}")</span>
-                        <span class="discounted-price">@($"{(item.price - item.discount):C}")</span>
-                    }
-                    else
-                    {
-                        <span>@($"{item.price:C}")</span>
-                    }
-                </p>
-                <form action="@Url.Action("AddToCart", "Cart")" method="post">
-                    <input type="hidden" name="productId" value="@item.productId" />
-                    <input type="hidden" name="quantity" value="1" />
-                    <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
-                </form>
-            </div>
-        </div>
-    }
-</div>
-
-<style>
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .product-card {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        background: #fff;
-        text-align: center;
-        padding: 15px;
-    }
-
-    .product-image img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .product-info h3 {
-        font-size: 18px;
-        margin: 10px 0;
-    }
-
-    .price {
-        font-size: 16px;
-        font-weight: bold;
-        color: #ff6600;
-    }
-
-    .original-price {
-        text-decoration: line-through;
-        color: #999;
-    }
-
-    .discounted-price {
-        color: #e60000;
-        font-weight: bold;
-    }
-
-    .btn {
-        display: inline-block;
-        padding: 10px 15px;
-        margin-top: 10px;
-        text-decoration: none;
-        color: #fff;
-        background: #007bff;
-        border-radius: 5px;
-    }
-
-        .btn:hover {
-            background: #0056b3;
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .sidebar {
+            width: 200px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            height: 100%;
+            font-size: 16px;
         }
-</style>
+
+            .sidebar h5 {
+                font-size: 19px;
+                margin-bottom: 20px;
+                font-weight: bold;
+            }
+
+            .sidebar ul {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            .sidebar li {
+                margin-bottom: 10px;
+            }
+
+            .sidebar a {
+                text-decoration: none;
+                color: #333;
+            }
+
+                .sidebar a:hover {
+                    color: #007bff;
+                }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            text-align: center;
+            padding: 10px;
+        }
+
+            .product-card img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                border-radius: 5px;
+            }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .price {
+            margin-bottom: 10px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-right: 5px;
+        }
+
+        .discounted-price {
+            color: #e60000;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .btn-cart {
+            font-size: 14px;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .text-primary {
+            font-size: 20px;
+        }
+    </style>
+}
+
+<div class="main-container">
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <h5>Loại sản phẩm</h5>
+        <ul>
+            <li><a href="@Url.Action("Index", "Home", new { area = "Customer" })">Tất cả sản phẩm</a></li>
+            @foreach (var cat in ViewBag.Categories)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Home", new { area = "Customer", categoryId = cat.categoryId })">
+                        @cat.categoryName
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="w-100">
+        <div class="product-grid">
+            @foreach (var item in Model)
+            {
+                <div class="product-card">
+                    <a href="@Url.Action("Detail", "Home", new { id = item.productId })">
+                        <img src="@Url.Content(item.imageUrl ?? "~/images/no-image.png")" alt="@item.productName" />
+                    </a>
+                    <div class="product-name">@item.productName</div>
+                    <div class="price">
+                        @if (item.discount > 0)
+                        {
+                            <span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".") </span>
+                            <span class="discounted-price">@String.Format("{0:N0}", item.price - item.discount).Replace(",", ".") </span>
+                        }
+                        else
+                        {
+                            <span class="text-primary">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                        }
+                    </div>
+                    <form action="@Url.Action("AddToCart", "Cart")" method="post">
+                        <input type="hidden" name="productId" value="@item.productId" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <button type="submit" class="btn btn-sm btn-outline-primary w-100 btn-cart">
+                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</div>

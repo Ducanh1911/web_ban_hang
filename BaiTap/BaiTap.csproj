@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SessionConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderDetailController.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Areas\Customer\Controllers\CartController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\OrderController.cs" />
+    <Compile Include="Areas\Customer\Controllers\RedirectController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -231,6 +233,9 @@
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Service\MomoService.cs" />
     <Compile Include="Service\UserService.cs" />
+    <Compile Include="VNPay\VNPayConfig.cs" />
+    <Compile Include="VNPay\VNPayController.cs" />
+    <Compile Include="VNPay\VNPayService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\css\sb-admin-2.css" />
@@ -1932,6 +1937,28 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\image\about-icon-1.png" />
+    <Content Include="Content\image\about-icon-2.png" />
+    <Content Include="Content\image\about-icon-3.png" />
+    <Content Include="Content\image\about-img.png" />
+    <Content Include="Content\image\book-bg.jpg" />
+    <Content Include="Content\image\home-bg.jpg" />
+    <Content Include="Content\image\home-img-1.png" />
+    <Content Include="Content\image\home-img-2.png" />
+    <Content Include="Content\image\home-img-3.png" />
+    <Content Include="Content\image\menu-1.png" />
+    <Content Include="Content\image\menu-2.png" />
+    <Content Include="Content\image\menu-3.png" />
+    <Content Include="Content\image\menu-4.png" />
+    <Content Include="Content\image\menu-5.png" />
+    <Content Include="Content\image\menu-6.png" />
+    <Content Include="Content\image\menu-bg.jpg" />
+    <Content Include="Content\image\pic-1.png" />
+    <Content Include="Content\image\pic-2.png" />
+    <Content Include="Content\image\pic-3.png" />
+    <Content Include="Content\image\pic-4.png" />
+    <Content Include="Content\js\script.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -2148,6 +2175,9 @@
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Cart\OrderConfirmation.cshtml" />
     <Content Include="Areas\Customer\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\InventoryReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\InventoryChart.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -2177,12 +2207,17 @@
     <Content Include="Views\User\LoadUser.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\ForgotPassword.cshtml" />
+    <Content Include="Views\User\VerifyOtp.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Content\" />
     <Folder Include="Areas\Customer\Views\Payment\" />
+    <Folder Include="Areas\Customer\Views\RedirectController\" />
     <Folder Include="Img\" />
+    <Folder Include="Views\VNPay\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

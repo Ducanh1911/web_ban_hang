@@ -16,8 +16,14 @@ namespace BaiTap
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home1", action = "Index", id = UrlParameter.Optional }
+                defaults: new
+                {
+                    controller = "Redirect",
+                    action = "ToCustomerHome",
+                    id = UrlParameter.Optional
+                }
             );
         }
+
     }
 }

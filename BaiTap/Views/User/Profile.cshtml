@@ -1,0 +1,67 @@
+﻿@model BaiTap.Models.User
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Thông Tin Tài Khoản</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-size: 20px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .profile-label {
+            font-weight: 800;
+        }
+
+        .profile-section {
+            background-color: #f8f9fa;
+            padding: 40px 60px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <div class="profile-section">
+            <h2>Thông Tin Tài Khoản</h2>
+
+            <div class="row mt-4 align-items-center">
+                <div class="col-md-3 text-center">
+                    <img src="~/Img/avt.jpg" alt="Profile Image" class="img-fluid rounded-circle" style="width: 180px; height: 180px;">
+
+                </div>
+                <div class="col-md-9">
+                    <h4>@Model.fullName</h4>
+                    <p><span class="profile-label">Email:</span> @Model.email</p>
+                    <p><span class="profile-label">Số điện thoại:</span> @Model.phoneNumber</p>
+                    <p><span class="profile-label">Địa chỉ:</span> @Model.address</p>
+                    <p><span class="profile-label">Ngày tham gia:</span> @Model.createdAt</p>
+                    <a href="~/User/ForgotPassword" class="btn btn-primary mt-3">Thay đổi mật khẩu</a>
+                    <a href="~/User/Login" class="btn btn-danger mt-3 ms-2">Đăng Xuất</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

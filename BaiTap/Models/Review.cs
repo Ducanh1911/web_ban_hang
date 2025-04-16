@@ -20,6 +20,7 @@ namespace BaiTap.Models
         public Nullable<int> rating { get; set; }
         public string comment { get; set; }
         public Nullable<System.DateTime> createdAt { get; set; }
+    
         public virtual Product Product { get; set; }
         public virtual User User { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using BaiTap.Models;
+﻿using BaiTap.App_Start;
+using BaiTap.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace BaiTap.Areas.Admin.Controllers
 {
+    [RoleUser]
     public class OrderDetailController : Controller
     {
         // GET: Admin/Order

@@ -1,4 +1,5 @@
-﻿using BaiTap.Models;
+﻿using BaiTap.App_Start;
+using BaiTap.Models;
 using System;
 using System.Collections.Generic;
 using System.EnterpriseServices;
@@ -14,11 +15,22 @@ namespace BaiTap.Areas.Customer.Controllers
         public HomeController(ShopEntities db)
         {
             _db = db;
-        }       
-        public ActionResult Index()
-        {
-            return View(_db.Products.ToList());
         }
+
+        public ActionResult Index(int? categoryId)
+        {
+            var products = _db.Products.AsQueryable();
+
+            if (categoryId.HasValue)
+            {
+                products = products.Where(p => p.categoryId == categoryId.Value);
+            }
+
+            ViewBag.Categories = _db.Categories.ToList(); 
+            return View(products.ToList());
+        }
+
+        [RoleUser]
         public ActionResult Detail(int id)
         {
             var product = _db.Products.FirstOrDefault(p => p.productId == id);

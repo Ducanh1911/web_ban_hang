@@ -10,7 +10,7 @@
 <p><strong>Ngày đặt:</strong> @(Model.orderDate?.ToString("dd/MM/yyyy HH:mm") ?? "Không có dữ liệu")</p>
 <p><strong>Địa chỉ nhận hàng:</strong> @Model.User.address</p>
 <p><strong>Số điện thoại:</strong> @Model.User.phoneNumber</p>
-<p><strong>Tổng tiền:</strong> @Model.totalAmount VNĐ</p>
+<p><strong>Tổng tiền:</strong> @String.Format("{0:N0}", Model.totalAmount).Replace(",", ".") VNĐ</p>
 
 <h3>Chi tiết đơn hàng</h3>
 <table class="table">
@@ -28,8 +28,11 @@
             <tr>
                 <td>@item.Product.productName</td>
                 <td>@item.quantity</td>
-                <td>@item.price</td>
-                <td>@(item.quantity * item.price)</td>
+                <td>
+                    @String.Format("{0:N0}", item.price).Replace(",", ".")
+                </td>
+                <td>@(((decimal)item.quantity * (decimal)item.price).ToString("#,0").Replace(",", "."))</td>
+
             </tr>
         }
     </tbody>

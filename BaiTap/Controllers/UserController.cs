@@ -3,81 +3,271 @@ using BaiTap.Models;
 using BaiTap.Repository;
 using BaiTap.Service;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Security.Cryptography;
+using System.Text;
+using System.Net.Mail;
+using System.Net;
 
 namespace BaiTap.Controllers
 {
 
     public class UserController : Controller
     {
+        ShopEntities db = new ShopEntities();
         private readonly UserService _userService;
+
         public UserController(UserService userService)
         {
-            _userService=userService;
+            _userService = userService;
         }
-        // GET: User
+
+        // GET: User/Login
+        public ActionResult Profile()
+        {
+            var user = BaiTap.App_Start.SessionConfig.GetUser();
+            if (user == null)
+            {
+                return RedirectToAction("Login"); 
+            }
+            return View(user);
+           
+        }
         public ActionResult Login()
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult Login(String email, string passwordHash)
+        public ActionResult Login(string email, string password)
         {
-            var user = _userService.Get(email, passwordHash);
-            if(user != null)
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                ViewBag.Error = "Vui lòng nhập đầy đủ email và mật khẩu.";
+                return View();
+            }
+
+            string passwordHash = HashPassword(password); 
+            var user = _userService.Get(email, passwordHash); 
+
+            if (user != null)
             {
                 SessionConfig.SetUser(user);
                 SessionConfig.SetUserId(user.userId);
                 if (user.role == "Admin")
                 {
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
                 }
                 else
                 {
                     return RedirectToAction("Index", "Home", new { area = "Customer" });
-
                 }
             }
-            ViewBag.Error = "Tài khoản hoặc mật khẩu không đúng";
+
+            ViewBag.Error = "Tài khoản hoặc mật khẩu không đúng.";
             return View();
         }
 
+
+
+        // GET: User/LoadUser
         public ActionResult LoadUser()
         {
             return View(_userService.GetUser());
         }
+
+        // GET: User/Register
         public ActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult Register(User user)
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(User model, string password)
         {
-            if(_userService.Add(user)== true)
+            if (ModelState.IsValid)
             {
-                return Redirect("~/User/Login");
+                model.passwordHash = HashPassword(password);
+                model.createdAt = DateTime.Now;
+                model.role = "Customer";
+
+                db.Users.Add(model);
+                db.SaveChanges();
+
+                return RedirectToAction("Login");
             }
-            else
-            {
-                return View(user);
-            }
+
+            ViewBag.Error = "Vui lòng kiểm tra lại thông tin.";
+            return View(model);
         }
 
-        public ActionResult Edit(int id) { 
+
+        // GET: User/Edit
+        public ActionResult Edit(int id)
+        {
             return View(_userService.Detail(id));
         }
+
         [HttpPost]
-        public ActionResult Edit(User model) {
-            if (_userService.Update(model)== true)
+        public ActionResult Edit(User model)
+        {
+            if (_userService.Update(model) == true)
             {
                 return Redirect("~/User/LoadUser");
             }
-            else { 
+            else
+            {
                 return View(model);
             }
         }
+
+        // GET: User/ForgotPassword
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(string email)
+        
+        
+        
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewBag.Error = "Vui lòng nhập email.";
+                return View();
+            }
+
+            var user = db.Users.FirstOrDefault(u => u.email == email);
+            if (user == null)
+            {
+                ViewBag.Error = "Email không tồn tại.";
+                return View();
+            }
+
+            string otp = GenerateOtp();
+            user.otp = otp;
+            user.otpExpiry = DateTime.Now.AddMinutes(10);
+            db.SaveChanges();
+
+            if (SendOtpEmail(email, otp))
+            {
+                ViewBag.Message = "Mã OTP đã được gửi đến email của bạn.";
+                return RedirectToAction("VerifyOtp", new { email = email });
+            }
+            else
+            {
+                ViewBag.Error = "Không thể gửi email. Vui lòng thử lại.";
+                return View();
+            }
+        }
+
+        // GET: User/VerifyOtp
+        public ActionResult VerifyOtp(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return RedirectToAction("ForgotPassword");
+            }
+            ViewBag.Email = email; 
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult VerifyOtp(string email, string otp, string password, string confirmPassword)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(otp) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+            {
+                ViewBag.Error = "Vui lòng điền đầy đủ thông tin.";
+                ViewBag.Email = email;
+                return View();
+            }
+
+            if (password != confirmPassword)
+            {
+                ViewBag.Error = "Mật khẩu xác nhận không khớp.";
+                ViewBag.Email = email;
+                return View();
+            }
+
+            var user = db.Users.FirstOrDefault(u => u.email == email);
+            if (user != null && user.otp == otp && user.otpExpiry > DateTime.Now)
+            {
+                user.passwordHash = HashPassword(password);
+                user.otp = null;
+                user.otpExpiry = null;
+                db.SaveChanges();
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ViewBag.Error = "Mã OTP không hợp lệ hoặc đã hết hạn.";
+                ViewBag.Email = email;
+                return View();
+            }
+        }
+
+        // Helper Methods
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
+        private string GenerateOtp()
+        {
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+        private bool SendOtpEmail(string email, string otp)
+        {
+            try
+            {
+                var fromAddress = new MailAddress("ducanhlanhtanh@gmail.com", "webbanhang");
+                var toAddress = new MailAddress(email);
+                const string fromPassword = "vqvhueulzjjqmsnp";
+                const string subject = "Mã OTP để đặt lại mật khẩu";
+                string body = $"Mã OTP của bạn là: {otp}. Mã này có hiệu lực trong 10 phút.";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Lỗi gửi email: " + ex.Message);
+                return false;
+            }
+        }
+
     }
 }

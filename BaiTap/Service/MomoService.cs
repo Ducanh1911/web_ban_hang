@@ -20,7 +20,6 @@ namespace BaiTap.Service
         private readonly string _endpoint;
         private readonly string _ipnUrl;
         private readonly string _returnUrl;
-
         public string AccessKey => _accessKey;
 
         public MomoService()
@@ -31,11 +30,13 @@ namespace BaiTap.Service
                 _accessKey = ConfigurationManager.AppSettings["MomoAccessKey"];
                 _secretKey = ConfigurationManager.AppSettings["MomoSecretKey"];
                 _endpoint = ConfigurationManager.AppSettings["MomoEndpoint"];
-                _ipnUrl = ConfigurationManager.AppSettings["MomoIpnUrl"];
-                _returnUrl = ConfigurationManager.AppSettings["MomoReturnUrl"];
+                _ipnUrl = ConfigurationManager.AppSettings["NotifyUrl"];
+                _returnUrl = ConfigurationManager.AppSettings["ReturnUrl"];
 
-                if (string.IsNullOrEmpty(_partnerCode) || string.IsNullOrEmpty(_accessKey) || 
-                    string.IsNullOrEmpty(_secretKey) || string.IsNullOrEmpty(_endpoint) || 
+                Debug.WriteLine($"MomoService Configuration - partnerCode: {_partnerCode}, accessKey: {_accessKey}, endpoint: {_endpoint}, returnUrl: {_returnUrl}, ipnUrl: {_ipnUrl}");
+
+                if (string.IsNullOrEmpty(_partnerCode) || string.IsNullOrEmpty(_accessKey) ||
+                    string.IsNullOrEmpty(_secretKey) || string.IsNullOrEmpty(_endpoint) ||
                     string.IsNullOrEmpty(_ipnUrl) || string.IsNullOrEmpty(_returnUrl))
                 {
                     throw new Exception("MOMO configuration is missing or invalid");
@@ -55,23 +56,24 @@ namespace BaiTap.Service
             return string.Join("&", sortedParams);
         }
 
-        private string GenerateUniqueId()
+        private string CreateRawSignatureForQuery(Dictionary<string, string> parameters)
         {
-            return DateTime.UtcNow.ToString("yyyyMMddHHmmss") + "_" + Guid.NewGuid().ToString("N").Substring(0, 8);
+            // MOMO requires the signature for QueryTransaction in this order: accessKey, orderId, partnerCode, requestId
+            return $"accessKey={parameters["accessKey"]}&orderId={parameters["orderId"]}&partnerCode={parameters["partnerCode"]}&requestId={parameters["requestId"]}";
         }
 
         public async Task<string> CreatePaymentRequest(string orderId, decimal amount, string orderInfo)
         {
             try
             {
-                // Tạo requestId và orderId duy nhất
-                var requestId = GenerateUniqueId();
-                var uniqueOrderId = $"{orderId}_{requestId}";
-                
-                // Chuyển đổi amount thành số nguyên
+                // Generate a unique requestId
+                var requestId = Guid.NewGuid().ToString();
+                var uniqueOrderId = orderId;
+
+                // Convert amount to integer (MOMO requires amount in VND as an integer)
                 var amountInt = (long)Math.Round(amount);
-                
-                // Tạo dictionary chứa các tham số theo thứ tự alphabet
+
+                // Create parameters for signature
                 var parameters = new Dictionary<string, string>
                 {
                     {"accessKey", _accessKey},
@@ -86,14 +88,15 @@ namespace BaiTap.Service
                     {"requestType", "captureWallet"}
                 };
 
-                // Tạo chuỗi raw signature từ dictionary đã sắp xếp
+                // Generate raw signature string
                 var rawSignature = CreateRawSignature(parameters);
-                Debug.WriteLine($"Raw Signature: {rawSignature}");
+                Debug.WriteLine($"Raw Signature (CreatePaymentRequest): {rawSignature}");
 
+                // Compute HMAC-SHA256 signature
                 var signature = ComputeHmacSha256(rawSignature, _secretKey);
-                Debug.WriteLine($"Generated Signature: {signature}");
+                Debug.WriteLine($"Generated Signature (CreatePaymentRequest): {signature}");
 
-                // Tạo request body với orderId duy nhất
+                // Create request body
                 var requestBody = new
                 {
                     partnerCode = _partnerCode,
@@ -113,19 +116,19 @@ namespace BaiTap.Service
                 };
 
                 var jsonRequest = JsonConvert.SerializeObject(requestBody);
-                Debug.WriteLine($"Request Body: {jsonRequest}");
+                Debug.WriteLine($"Request Body (CreatePaymentRequest): {jsonRequest}");
 
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Add("Accept", "application/json");
                     var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-                    
+
                     Debug.WriteLine($"Sending request to: {_endpoint}");
                     var response = await client.PostAsync(_endpoint, content);
-                    
+
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Response Status: {response.StatusCode}");
-                    Debug.WriteLine($"Response Content: {responseContent}");
+                    Debug.WriteLine($"Response Status (CreatePaymentRequest): {response.StatusCode}");
+                    Debug.WriteLine($"Response Content (CreatePaymentRequest): {responseContent}");
 
                     if (!response.IsSuccessStatusCode)
                     {
@@ -140,13 +143,13 @@ namespace BaiTap.Service
                     try
                     {
                         var responseObject = JObject.Parse(responseContent);
-                        
+
                         var resultCode = responseObject["resultCode"]?.ToString();
                         var payUrl = responseObject["payUrl"]?.ToString();
                         var message = responseObject["message"]?.ToString() ?? "Unknown error";
 
-                        Debug.WriteLine($"Result Code: {resultCode}");
-                        Debug.WriteLine($"Message: {message}");
+                        Debug.WriteLine($"Result Code (CreatePaymentRequest): {resultCode}");
+                        Debug.WriteLine($"Message (CreatePaymentRequest): {message}");
                         Debug.WriteLine($"Pay URL: {payUrl}");
 
                         if (string.IsNullOrEmpty(resultCode))
@@ -174,6 +177,84 @@ namespace BaiTap.Service
             }
         }
 
+        public async Task<(bool Success, string Message)> QueryTransaction(string orderId, string requestId)
+        {
+            try
+            {
+                var parameters = new Dictionary<string, string>
+                {
+                    { "accessKey", _accessKey },
+                    { "partnerCode", _partnerCode },
+                    { "requestId", requestId },
+                    { "orderId", orderId }
+                };
+
+                // Generate raw signature string in the correct order
+                var rawSignature = CreateRawSignatureForQuery(parameters);
+                Debug.WriteLine($"Raw Signature (QueryTransaction): {rawSignature}");
+
+                var signature = ComputeHmacSha256(rawSignature, _secretKey);
+                Debug.WriteLine($"Generated Signature (QueryTransaction): {signature}");
+
+                var requestBody = new
+                {
+                    partnerCode = _partnerCode,
+                    requestId = requestId,
+                    orderId = orderId,
+                    lang = "vi",
+                    signature = signature
+                };
+
+                var jsonRequest = JsonConvert.SerializeObject(requestBody);
+                Debug.WriteLine($"QueryTransaction Request Body: {jsonRequest}");
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                    var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+                    var queryEndpoint = "https://test-payment.momo.vn/v2/gateway/api/query";
+                    Debug.WriteLine($"Sending QueryTransaction request to: {queryEndpoint}");
+                    var response = await client.PostAsync(queryEndpoint, content);
+
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine($"QueryTransaction Response Status: {response.StatusCode}");
+                    Debug.WriteLine($"QueryTransaction Response Content: {responseContent}");
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception($"QueryTransaction failed with status code: {response.StatusCode}, Content: {responseContent}");
+                    }
+
+                    var responseObject = JObject.Parse(responseContent);
+                    var resultCode = responseObject["resultCode"]?.ToString();
+                    var message = responseObject["message"]?.ToString() ?? "Unknown error";
+
+                    Debug.WriteLine($"QueryTransaction Result Code: {resultCode}, Message: {message}");
+
+                    if (resultCode == "0")
+                    {
+                        var transId = responseObject["transId"]?.ToString();
+                        if (!string.IsNullOrEmpty(transId))
+                        {
+                            return (true, "Thanh toán thành công");
+                        }
+                        else
+                        {
+                            return (false, "Giao dịch chưa hoàn tất");
+                        }
+                    }
+
+                    return (false, $"MOMO Error: {message}. Result Code: {resultCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in QueryTransaction: {ex.Message}");
+                return (false, ex.Message);
+            }
+        }
+
         private string ComputeHmacSha256(string message, string secretKey)
         {
             var keyBytes = Encoding.UTF8.GetBytes(secretKey);
@@ -183,23 +264,6 @@ namespace BaiTap.Service
             {
                 var hashBytes = hmac.ComputeHash(messageBytes);
                 return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-            }
-        }
-
-        public bool ValidateSignature(string rawHash, string signature)
-        {
-            try
-            {
-                var calculatedSignature = ComputeHmacSha256(rawHash, _secretKey);
-                Debug.WriteLine($"Raw Hash: {rawHash}");
-                Debug.WriteLine($"Received Signature: {signature}");
-                Debug.WriteLine($"Calculated Signature: {calculatedSignature}");
-                return calculatedSignature.Equals(signature, StringComparison.OrdinalIgnoreCase);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error validating signature: {ex.Message}");
-                return false;
             }
         }
     }

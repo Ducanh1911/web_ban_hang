@@ -132,6 +132,8 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="quanLyBanHangModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="otpExpiry" ColumnName="otpExpiry" />
+          <ScalarProperty Name="otp" ColumnName="otp" />
           <ScalarProperty Name="userId" ColumnName="userId" />
           <ScalarProperty Name="fullName" ColumnName="fullName" />
           <ScalarProperty Name="email" ColumnName="email" />

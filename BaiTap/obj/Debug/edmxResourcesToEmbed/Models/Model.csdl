@@ -150,6 +150,8 @@
     <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__userId__571DF1D5" FromRole="Users" ToRole="Orders" />
     <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__userId__6A30C649" FromRole="Users" ToRole="Reviews" />
     <NavigationProperty Name="Carts" Relationship="quanLyBanHangModel.FK__Cart__userId__17F790F9" FromRole="User" ToRole="Cart" />
+    <Property Name="otp" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="otpExpiry" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK__Products__catego__534D60F1">
     <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />

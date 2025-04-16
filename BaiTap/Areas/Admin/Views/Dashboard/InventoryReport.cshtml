@@ -1,0 +1,100 @@
+﻿@model IEnumerable<BaiTap.Models.Product>
+
+@{
+    ViewBag.Title = "Báo cáo tồn kho";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<h2>Báo cáo tồn kho</h2>
+
+<!-- Bộ lọc danh mục -->
+<div class="row mb-3">
+    <div class="col-md-4">
+        <form method="get" action="@Url.Action("InventoryReport")">
+            <div class="form-group">
+                <label for="categoryId">Lọc theo danh mục:</label>
+                <select name="categoryId" id="categoryId" class="form-control" onchange="this.form.submit()">
+                    <option value="">Tất cả danh mục</option>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.categoryId" @(ViewBag.SelectedCategoryId == category.categoryId ? "selected" : "")>@category.categoryName</option>
+                    }
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Thống kê tóm tắt -->
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tổng sản phẩm</h5>
+                <p class="card-text">@ViewBag.TotalProducts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Hết hàng</h5>
+                <p class="card-text">@ViewBag.OutOfStock</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Hàng sắp hết</h5>
+                <p class="card-text">@ViewBag.LowStock</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bảng báo cáo -->
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Tồn kho</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    @{ int stt = 1;}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@stt</td>
+                <td>@item.productName</td>
+                <td>@(item.Category != null ? item.Category.categoryName : "Không xác định")</td>
+                <td>@item.stock</td>
+                <td>
+                    @String.Format("{0:N0}", item.price).Replace(",", ".")
+                </td>
+                <td>
+                    @if (item.stock == 0)
+                    {
+                        <span class="badge badge-danger">Hết hàng</span>
+                    }
+                    else if (item.stock <= 10)
+                    {
+                        <span class="badge badge-warning">Sắp hết</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-success">Còn hàng</span>
+                    }
+                </td>
+
+           
+            </tr>
+            stt++;
+        }
+    </tbody>
+</table>

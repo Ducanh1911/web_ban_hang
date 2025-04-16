@@ -9,10 +9,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Razor.Tokenizer.Symbols;
 using PagedList;
+using BaiTap.App_Start;
 
 
 namespace BaiTap.Areas.Admin.Controllers
 {
+    [RoleUser]
     public class ProductController : Controller
     {
         public readonly ShopEntities _db;

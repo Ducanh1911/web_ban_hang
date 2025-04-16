@@ -11,8 +11,11 @@
         <p class="price">
             @if (Model.discount > 0)
             {
-                <span class="original-price">@($"{Model.price:C}")</span>
-                <span class="discounted-price">@($"{(Model.price - Model.discount):C}")</span>
+                <span class="original-price">
+                    @String.Format("{0:N0}", Model.price).Replace(",", ".")
+                </span>
+                <span class="discounted-price">@($"{((decimal)Model.price - (decimal)Model.discount).ToString("#,0").Replace(",", ".")}")</span>
+
             }
             else
             {

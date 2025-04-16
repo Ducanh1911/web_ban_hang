@@ -1,0 +1,97 @@
+﻿@using System.Linq
+
+@{
+    ViewBag.Title = "Biểu đồ tồn kho";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .main-container {
+            padding: 20px;
+        }
+
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+    </style>
+}
+
+<div class="main-container">
+    <h2>Biểu đồ tồn kho</h2>
+
+    <!-- Bộ lọc danh mục -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <form method="get" action="@Url.Action("InventoryChart")">
+                <div class="form-group">
+                    <label for="categoryId">Lọc theo danh mục:</label>
+                    <select name="categoryId" id="categoryId" class="form-control" onchange="this.form.submit()">
+                        <option value="">Tất cả danh mục</option>
+                        @foreach (var category in ViewBag.Categories)
+                        {
+                            <option value="@category.categoryId" @(ViewBag.SelectedCategoryId == category.categoryId ? "selected" : "")>@category.categoryName</option>
+                        }
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Biểu đồ -->
+    <div style="margin: 40px 0;">
+        <h3>Biểu đồ tồn kho sản phẩm</h3>
+            <canvas id="inventoryChart" height="100"></canvas>
+       
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (function () {
+            var ctx = document.getElementById("inventoryChart");
+            if (ctx) {
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: @Html.Raw(Json.Encode(ViewBag.ProductNames)),
+                        datasets: [{
+                            label: 'Số lượng tồn kho',
+                            data: @Html.Raw(Json.Encode(ViewBag.StockLevels)),
+                            backgroundColor: @Html.Raw(Json.Encode(ViewBag.BackgroundColors)),
+                            borderColor: @Html.Raw(Json.Encode(ViewBag.BackgroundColors)),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Tồn kho theo sản phẩm'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Số lượng tồn kho'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Sản phẩm'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        })();
+    </script>
+}

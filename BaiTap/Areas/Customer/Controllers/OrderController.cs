@@ -2,15 +2,14 @@
 using BaiTap.Models;
 using BaiTap.Service;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
 
 namespace BaiTap.Areas.Customer.Controllers
 {
+    [RoleUser]
     public class OrderController : Controller
     {
         private readonly ShopEntities _db;
@@ -21,6 +20,7 @@ namespace BaiTap.Areas.Customer.Controllers
             _db = db;
             _momoService = new MomoService();
         }
+
         // GET: Customer/Order
         public ActionResult Index()
         {
@@ -31,12 +31,13 @@ namespace BaiTap.Areas.Customer.Controllers
 
             return View(orders);
         }
+
         public ActionResult Delete(int id)
         {
             var ds = _db.Orders.Find(id);
             _db.Orders.Remove(ds);
             _db.SaveChanges();
-            return RedirectToAction("index");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -50,22 +51,26 @@ namespace BaiTap.Areas.Customer.Controllers
                     return Json(new { success = false, message = "Không tìm thấy đơn hàng" });
                 }
 
-                if (order.status == "Paid")
+                if (order.status == "Processing")
                 {
                     return Json(new { success = false, message = "Đơn hàng đã được thanh toán" });
                 }
 
                 Debug.WriteLine($"Creating payment request for order {orderId} with amount {order.finalAmount}");
 
+                // Generate a unique requestId
+                var requestId = Guid.NewGuid().ToString();
+                var uniqueOrderId = $"{orderId}_{requestId}";
                 var paymentUrl = await _momoService.CreatePaymentRequest(
-                    orderId.ToString(),
+                    uniqueOrderId,
                     order.finalAmount,
                     $"Thanh toán đơn hàng #{orderId}"
                 );
 
                 Debug.WriteLine($"Payment URL received: {paymentUrl}");
 
-                return Json(new { success = true, paymentUrl });
+                // Return the paymentUrl to the frontend
+                return Json(new { success = true, paymentUrl = paymentUrl, requestId = requestId, orderId = uniqueOrderId });
             }
             catch (Exception ex)
             {
@@ -74,113 +79,104 @@ namespace BaiTap.Areas.Customer.Controllers
             }
         }
 
-        public ActionResult MomoReturn(
-            string partnerCode, 
-            string orderId, 
-            string requestId,
-            string amount, 
-            string orderInfo,
-            string orderType,
-            string transId,
-            string resultCode, 
-            string message,
-            string payType,
-            string responseTime,
-            string extraData,
-            string signature)
+        [HttpPost]
+        public async Task<ActionResult> CheckPaymentStatus(int orderId, string requestId, string uniqueOrderId)
         {
             try
             {
-                Debug.WriteLine($"Received MOMO return callback for order {orderId}");
-
-                // Validate signature
-                var rawHash = $"accessKey={_momoService.AccessKey}&amount={amount}&extraData={extraData}&message={message}&orderId={orderId}&orderInfo={orderInfo}&orderType={orderType}&partnerCode={partnerCode}&payType={payType}&requestId={requestId}&responseTime={responseTime}&resultCode={resultCode}&transId={transId}";
-                
-                if (!_momoService.ValidateSignature(rawHash, signature))
+                var order = _db.Orders.Find(orderId);
+                if (order == null)
                 {
-                    Debug.WriteLine("Invalid signature received");
-                    TempData["ErrorMessage"] = "Chữ ký không hợp lệ";
-                    return RedirectToAction("Index");
+                    Debug.WriteLine($"Order {orderId} not found in database");
+                    return Json(new { success = false, message = "Không tìm thấy đơn hàng" });
                 }
 
-                if (resultCode == "0")
+                if (order.status == "Processing")
                 {
-                    var order = _db.Orders.Find(int.Parse(orderId));
-                    if (order != null)
+                    Debug.WriteLine($"Order {orderId} is already in Processing status");
+                    return Json(new { success = true, message = "Đơn hàng đã được thanh toán" });
+                }
+
+                Debug.WriteLine($"Checking payment status for order {orderId}, uniqueOrderId: {uniqueOrderId}, requestId: {requestId}");
+
+                // Query the transaction status
+                var (success, message) = await _momoService.QueryTransaction(uniqueOrderId, requestId);
+
+                Debug.WriteLine($"QueryTransaction result for order {orderId}: success={success}, message={message}");
+
+                if (success)
+                {
+                    // Update order status
+                    order.status = "Processing";
+                    Debug.WriteLine($"Updated order {orderId} status to Processing");
+
+                    // Save payment information to the database
+                    var payment = new Payment
                     {
-                        order.status = "Paid";
+                        orderId = order.orderId,
+                        paidAmount = order.finalAmount,
+                        transactionId = "MOMO_" + Guid.NewGuid().ToString(),
+                        paymentStatus = "completed",
+                        paymentMethod = "paypal",
+                        paidDate = DateTime.Now
+                    };
+
+                    Debug.WriteLine($"Adding payment for order {orderId}: orderId={payment.orderId}, paidAmount={payment.paidAmount}, transactionId={payment.transactionId}, paymentStatus={payment.paymentStatus}, paymentMethod={payment.paymentMethod}, paidDate={payment.paidDate}");
+
+                    _db.Payments.Add(payment);
+
+                    try
+                    {
                         _db.SaveChanges();
-                        Debug.WriteLine($"Order {orderId} marked as paid");
+                        Debug.WriteLine($"Order {orderId} marked as paid and payment saved successfully");
                     }
-                    TempData["SuccessMessage"] = "Thanh toán thành công!";
+                    catch (Exception saveEx)
+                    {
+                        Debug.WriteLine($"Error saving payment for order {orderId}: {saveEx.Message}");
+                        Debug.WriteLine($"Stack Trace: {saveEx.StackTrace}");
+                        throw;
+                    }
+
+                    return Json(new { success = true, message = "Thanh toán thành công" });
                 }
                 else
                 {
-                    Debug.WriteLine($"Payment failed with message: {message}");
-                    TempData["ErrorMessage"] = $"Thanh toán thất bại: {message}";
+                    Debug.WriteLine($"Payment not successful for order {orderId}: {message}");
+                    return Json(new { success = false, message = message });
                 }
-
-                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error in MomoReturn: {ex.Message}");
-                TempData["ErrorMessage"] = "Có lỗi xảy ra khi xử lý thanh toán";
-                return RedirectToAction("Index");
+                Debug.WriteLine($"Error in CheckPaymentStatus for order {orderId}: {ex.Message}");
+                Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                return Json(new { success = false, message = ex.Message });
             }
         }
 
+        // Handle MOMO callback (IPN - Instant Payment Notification)
         [HttpPost]
-        public ActionResult MomoIpn(
-            string partnerCode,
-            string orderId,
-            string requestId,
-            string amount,
-            string orderInfo,
-            string orderType,
-            string transId,
-            string resultCode,
-            string message,
-            string payType,
-            string responseTime,
-            string extraData,
-            string signature)
+        public ActionResult PaymentCallBack()
         {
-            try
+            // This action can be used to handle MOMO's IPN notifications
+            // For now, we'll just log the callback and return a success response
+            Debug.WriteLine("Received MOMO IPN callback");
+            return new HttpStatusCodeResult(200);
+        }
+
+        // Handle MOMO return URL
+        public ActionResult ReturnFromMomo(string orderId, string resultCode, string message)
+        {
+            if (resultCode == "0")
             {
-                Debug.WriteLine($"Received MOMO IPN callback for order {orderId}");
-
-                // Validate signature
-                var rawHash = $"accessKey={_momoService.AccessKey}&amount={amount}&extraData={extraData}&message={message}&orderId={orderId}&orderInfo={orderInfo}&orderType={orderType}&partnerCode={partnerCode}&payType={payType}&requestId={requestId}&responseTime={responseTime}&resultCode={resultCode}&transId={transId}";
-                
-                if (!_momoService.ValidateSignature(rawHash, signature))
-                {
-                    Debug.WriteLine("Invalid signature received in IPN");
-                    return Json(new { message = "Invalid signature" });
-                }
-
-                if (resultCode == "0")
-                {
-                    var order = _db.Orders.Find(int.Parse(orderId));
-                    if (order != null)
-                    {
-                        order.status = "Paid";
-                        _db.SaveChanges();
-                        Debug.WriteLine($"Order {orderId} marked as paid via IPN");
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine($"Payment failed in IPN with message: {message}");
-                }
-
-                return Json(new { message = "Success" });
+                TempData["SuccessMessage"] = "Thanh toán thành công!";
+                return RedirectToAction("~/Customer/Order/Index");
             }
-            catch (Exception ex)
+            else
             {
-                Debug.WriteLine($"Error in MomoIpn: {ex.Message}");
-                return Json(new { message = "Error processing IPN" });
+                TempData["ErrorMessage"] = $"Thanh toán thất bại: {message}";
             }
+
+            return RedirectToAction("Index");
         }
     }
 }

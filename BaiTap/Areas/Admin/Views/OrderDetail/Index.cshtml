@@ -33,34 +33,35 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Where(o => o.Order.status == "shipped")) {
-    <tr>
-        <td>@STT</td>
-      
-        <td>
-            @Html.DisplayFor(ModelItem => item.Product.productName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.quantity)
-        </td>
-        <td>
-            @String.Format("{0:N0}", item.price).Replace(",", ".")
+    @foreach (var item in Model.Where(o => o.Order.status.ToLower() == "shipped"))
+    {
+        <tr>
+            <td>@STT</td>
 
-        </td>
-        <td>
-            @String.Format("{0:N0}", item.discount).Replace(",", ".")
+            <td>
+                @Html.DisplayFor(ModelItem => item.Product.productName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                @String.Format("{0:N0}", item.price).Replace(",", ".")
 
-        </td>
-        <td>
-            @String.Format("{0:N0}", item.subtotal).Replace(",", ".")
+            </td>
+            <td>
+                @String.Format("{0:N0}", item.discount).Replace(",", ".")
 
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Order.status)
-        </td>
+            </td>
+            <td>
+                @String.Format("{0:N0}", item.subtotal).Replace(",", ".")
 
-    </tr>
-    STT++;
-}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.status)
+            </td>
+
+        </tr>
+        STT++;
+    }
 
 </table>

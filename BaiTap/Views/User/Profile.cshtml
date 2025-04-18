@@ -1,5 +1,8 @@
 ﻿@model BaiTap.Models.User
+@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
+}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -42,18 +45,21 @@
     <div class="container-fluid mt-5">
         <div class="profile-section">
             <h2>Thông Tin Tài Khoản</h2>
+            @*<a href="~/Customer/Order/Index" class="btn btn-primary">Đơn hàng đã mua</a>*@
 
             <div class="row mt-4 align-items-center">
                 <div class="col-md-3 text-center">
                     <img src="~/Img/avt.jpg" alt="Profile Image" class="img-fluid rounded-circle" style="width: 180px; height: 180px;">
-
+                    <h4>@Model.fullName</h4>
                 </div>
                 <div class="col-md-9">
-                    <h4>@Model.fullName</h4>
+                    
                     <p><span class="profile-label">Email:</span> @Model.email</p>
                     <p><span class="profile-label">Số điện thoại:</span> @Model.phoneNumber</p>
                     <p><span class="profile-label">Địa chỉ:</span> @Model.address</p>
                     <p><span class="profile-label">Ngày tham gia:</span> @Model.createdAt</p>
+                    <a href="~/User/EditProfile/@Model.userId" class="btn btn-warning mt-3 ms-2">Sửa thông tin</a>
+
                     <a href="~/User/ForgotPassword" class="btn btn-primary mt-3">Thay đổi mật khẩu</a>
                     <a href="~/User/Login" class="btn btn-danger mt-3 ms-2">Đăng Xuất</a>
                 </div>

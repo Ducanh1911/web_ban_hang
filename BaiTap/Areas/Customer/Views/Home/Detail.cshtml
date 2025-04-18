@@ -3,9 +3,10 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
+@*<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>*@
 <div class="product-detail">
     <img src="@Url.Content(Model.imageUrl)" alt="@Model.productName" class="product-detail-image">
+
     <div class="product-detail-info">
         <h2>@Model.productName</h2>
         <p class="price">
@@ -19,7 +20,9 @@
             }
             else
             {
-                <span>@($"{Model.price:C}")</span>
+                <span class="text-primary">
+                    @String.Format("{0:N0}", Model.price).Replace(",", ".")
+                </span>
             }
         </p>
 
@@ -36,19 +39,20 @@
             {
                 if (i <= Math.Floor(averageRating))
                 {
-                    <i class="fas fa-star" style="color: gold;"></i> 
+                    <i class="fas fa-star" style="color: gold;"></i>
                 }
                 else if (i - 1 < averageRating)
                 {
-                    <i class="fas fa-star-half-alt" style="color: gold;"></i> 
+                    <i class="fas fa-star-half-alt" style="color: gold;"></i>
                 }
                 else
                 {
-                    <i class="far fa-star" style="color: gold;"></i> 
+                    <i class="far fa-star" style="color: gold;"></i>
                 }
             }
             <span>(@averageRating.ToString("0.0")/5)</span>
         </p>
+        <a href="">Mua ngay</a>
 
 
     </div>
@@ -95,6 +99,7 @@
         background: #007bff;
         border-radius: 5px;
     }
+    
 
         .btn:hover {
             background: #0056b3;

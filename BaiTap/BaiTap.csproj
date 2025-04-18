@@ -2178,6 +2178,8 @@
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\InventoryReport.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\InventoryChart.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Edit.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -2210,6 +2212,7 @@
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\VerifyOtp.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,6 +19,7 @@
         <th>
             Ngày đặt đơn
         </th>
+        <th></th>
     </tr>
 @{ int stt = 1;}
 @foreach (var item in Model) {
@@ -31,7 +32,7 @@
             @Html.DisplayFor(modelItem => item.User.address)
         </td>
         <td>
-            @String.Format("{0:N0}", item.finalAmount).Replace(",", ".") 
+            @String.Format("{0:N0}", item.finalAmount).Replace(",", ".")
 
 
         </td>
@@ -41,8 +42,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.orderDate)
         </td>
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new { id = item.orderId }, new { @class = "btn btn-primary btn-sm" })
+        </td>
 
-        
     </tr>
     stt++;
 }

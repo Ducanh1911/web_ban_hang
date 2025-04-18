@@ -29,10 +29,10 @@ namespace BaiTap.Controllers
             var user = BaiTap.App_Start.SessionConfig.GetUser();
             if (user == null)
             {
-                return RedirectToAction("Login"); 
+                return RedirectToAction("Login");
             }
             return View(user);
-           
+
         }
         public ActionResult Login()
         {
@@ -48,8 +48,8 @@ namespace BaiTap.Controllers
                 return View();
             }
 
-            string passwordHash = HashPassword(password); 
-            var user = _userService.Get(email, passwordHash); 
+            string passwordHash = HashPassword(password);
+            var user = _userService.Get(email, passwordHash);
 
             if (user != null)
             {
@@ -85,10 +85,23 @@ namespace BaiTap.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public ActionResult Register(User model, string password)
         {
             if (ModelState.IsValid)
             {
+                var existingUser = db.Users.FirstOrDefault(u => u.email == model.email);
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError("email", "Email đã tồn tại. Vui lòng sử dụng email khác.");
+                    return View(model);
+                }
+                var existingPhone = db.Users.FirstOrDefault(u => u.phoneNumber == model.phoneNumber);
+                if (existingPhone != null)
+                {
+                    ModelState.AddModelError("phoneNumber", "Số điện thoại đã được sử dụng. Vui lòng nhập số khác.");
+                    return View(model);
+                }
                 model.passwordHash = HashPassword(password);
                 model.createdAt = DateTime.Now;
                 model.role = "Customer";
@@ -111,16 +124,21 @@ namespace BaiTap.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(User model)
+        public ActionResult Edit(User user)
         {
-            if (_userService.Update(model) == true)
-            {
-                return Redirect("~/User/LoadUser");
-            }
-            else
-            {
-                return View(model);
-            }
+            var u = db.Users.FirstOrDefault(x => x.userId == user.userId);
+            //if (u == null) { return false; }
+            u.fullName = user.fullName;
+            u.email = user.email;
+            u.passwordHash = user.passwordHash;
+            u.phoneNumber = user.phoneNumber;
+            u.address = user.address;
+            u.role = user.role;
+            u.createdAt = user.createdAt;
+            u.otp = user.otp;
+            u.otpExpiry = user.otpExpiry;
+            db.SaveChanges();
+            return Redirect("/User/LoadUser");
         }
 
         // GET: User/ForgotPassword
@@ -132,9 +150,9 @@ namespace BaiTap.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(string email)
-        
-        
-        
+
+
+
         {
             if (string.IsNullOrEmpty(email))
             {
@@ -166,6 +184,47 @@ namespace BaiTap.Controllers
             }
         }
 
+        // GET: User/EditProfile
+        public ActionResult EditProfile()
+        {
+            var userId = SessionConfig.GetUserId();
+            var user = db.Users.FirstOrDefault(u => u.userId == userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: User/EditProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile(User model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = SessionConfig.GetUserId();
+            var user = db.Users.FirstOrDefault(u => u.userId == userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            user.fullName = model.fullName;
+            user.phoneNumber = model.phoneNumber;
+            user.address = model.address;
+            db.SaveChanges();
+
+            // Cập nhật lại thông tin mới trong Session
+            SessionConfig.SetUser(user);
+
+            TempData["Success"] = "Cập nhật thông tin thành công.";
+            return RedirectToAction("Profile");
+        }
+
         // GET: User/VerifyOtp
         public ActionResult VerifyOtp(string email)
         {
@@ -173,7 +232,7 @@ namespace BaiTap.Controllers
             {
                 return RedirectToAction("ForgotPassword");
             }
-            ViewBag.Email = email; 
+            ViewBag.Email = email;
             return View();
         }
 

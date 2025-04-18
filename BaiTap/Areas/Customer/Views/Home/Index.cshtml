@@ -151,3 +151,15 @@
         </div>
     </div>
 </div>
+@if (TempData["AddMessage"] != null)
+{
+    <div class="toast show position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1050; background-color: #ffffff;" role="alert">
+        <div class="toast-header">
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            @TempData["AddMessage"]
+        </div>
+    </div>
+}

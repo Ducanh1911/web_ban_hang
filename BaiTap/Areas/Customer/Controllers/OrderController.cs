@@ -117,7 +117,7 @@ namespace BaiTap.Areas.Customer.Controllers
                         paidAmount = order.finalAmount,
                         transactionId = "MOMO_" + Guid.NewGuid().ToString(),
                         paymentStatus = "completed",
-                        paymentMethod = "paypal",
+                        paymentMethod = "momo",
                         paidDate = DateTime.Now
                     };
 

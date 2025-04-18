@@ -14,7 +14,7 @@ using BaiTap.App_Start;
 
 namespace BaiTap.Areas.Admin.Controllers
 {
-    [RoleUser]
+    //[RoleUser]
     public class ProductController : Controller
     {
         public readonly ShopEntities _db;
@@ -35,6 +35,7 @@ namespace BaiTap.Areas.Admin.Controllers
                             .ToPagedList(pageNumber, pageSize);
 
             ViewBag.Search = search;
+            ViewBag.Categories = _db.Categories.ToList();
             return View(products);
         }
         //upload file
@@ -52,7 +53,12 @@ namespace BaiTap.Areas.Admin.Controllers
             }
             return string.Empty;
         }
-
+        public ActionResult Add()
+        {
+            ViewBag.Categories = _db.Categories.ToList();
+            return View();
+        }
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Add(Product product, HttpPostedFileBase file)
         {
@@ -75,13 +81,15 @@ namespace BaiTap.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
+            ViewBag.Categories = _db.Categories.ToList();
             return View(_productService.Detail(id));
         }
-        [HttpPost]
+        [ValidateAntiForgeryToken]
 
+        [HttpPost]
         public ActionResult Edit(Product product, HttpPostedFileBase file)
         {
-
+            
             if (file != null && file.ContentLength > 0)
             {
                 string imageUrl = UploadFile(file);
@@ -91,7 +99,7 @@ namespace BaiTap.Areas.Admin.Controllers
                 }
             }
             if (_productService.Update(product) == true)
-            {
+            {    
                 TempData["EditSuccessMessage"] = "Cập nhật sản phẩm thành công!";
                 return Redirect("~/Admin/Product/LoadProduct");
             }
@@ -99,6 +107,7 @@ namespace BaiTap.Areas.Admin.Controllers
             {
                 return View(product);
             }
+
         }
         public ActionResult Delete(int id)
         {

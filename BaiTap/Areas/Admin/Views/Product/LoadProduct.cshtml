@@ -18,9 +18,7 @@
 
     <p>
         <input type="text" id="searchBox" class="form-control d-inline-block" placeholder="Tìm kiếm" style="width: 300px; display: inline-block;">
-        <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#addProductDrawer">
-            Thêm mới
-        </button>
+        <a href="~/Admin/Product/Add">Thêm mới</a>
     </p>
     <table class="table">
         <tr>
@@ -28,7 +26,7 @@
             <th>
                 Tên sản phẩm
             </th>
-          
+
             <th>
                 Giá
             </th>
@@ -55,13 +53,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.productName)
                 </td>
-                
+
                 <td>
-                    @String.Format("{0:N0}", item.price).Replace(",", ".") 
+                    @String.Format("{0:N0}", item.price).Replace(",", ".")
 
                 </td>
                 <td>
-                    @String.Format("{0:N0}", item.discount).Replace(",", ".") 
+                    @String.Format("{0:N0}", item.discount).Replace(",", ".")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.stock)
@@ -161,50 +159,6 @@
 </script>
 
 
-@*thêm sản phẩm*@
-<div class="offcanvas offcanvas-end" tabindex="-1" id="addProductDrawer" aria-labelledby="offcanvasLabel">
-    <div class="offcanvas-header">
-        <h5 id="offcanvasLabel">Thêm sản phẩm</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <form action="@Url.Action("Add", "Product")" method="post" enctype="multipart/form-data">
-            @Html.AntiForgeryToken()
-
-            <input type="hidden" name="productId" id="productId" />
-            <div class="mb-3">
-                <label class="form-label">Tên sản phẩm</label>
-                <input type="text" class="form-control" name="productName" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Mô tả</label>
-                <textarea class="form-control" name="description"></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Giá</label>
-                <input type="number" class="form-control" name="price" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Giảm giá</label>
-                <input type="number" class="form-control" name="discount">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Số lượng</label>
-                <input type="number" class="form-control" name="stock">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Chọn ảnh</label>
-                <input type="file" name="file" class="form-control" accept="image/*">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Ngày tạo</label>
-                <input type="date" class="form-control" name="createdAt">
-            </div>
-
-            <button type="submit" class="btn btn-success">Lưu</button>
-        </form>
-    </div>
-</div>
 
 @*tìm kiếm*@
 <script>

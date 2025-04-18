@@ -21,5 +21,33 @@ namespace BaiTap.Areas.Admin.Controllers
         {
             return View(_db.Orders.ToList());
         }
+        public ActionResult Edit(int id)
+        {
+            var order = _db.Orders.FirstOrDefault(o => o.orderId == id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Order model)
+        {
+            var order = _db.Orders.FirstOrDefault(o => o.orderId == model.orderId);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Cập nhật chỉ trạng thái (vì các trường khác bị ẩn và không cho sửa)
+            order.status = model.status;
+
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

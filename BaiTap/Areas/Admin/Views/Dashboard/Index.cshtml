@@ -104,8 +104,9 @@
             <div class="value">@ViewBag.OutOfStockProducts</div>
         </div>
         <div class="stat-card">
-            <h3>Doanh Thu Hôm Nay</h3>
-            <div class="value">@String.Format("{0:N0}", ViewBag.TodayRevenue).Replace(",", ".")</div>
+            <h3>Tổng Doanh Thu</h3>
+            <div class="value">@String.Format("{0:N0}", ViewBag.TotalRevenue).Replace(",", ".") VND</div>
+            @*<div class="value">Số đơn hàng: @ViewBag.OrderCount</div>*@
         </div>
     </div>
 

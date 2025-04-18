@@ -56,7 +56,8 @@ namespace BaiTap.Areas.Customer.Controllers
                 _db.Carts.Add(newCartItem);
             }
             _db.SaveChanges();
-            return RedirectToAction("Cart");
+            TempData["AddMessage"] = "Thêm thành công vào giỏ hàng!";
+            return Redirect("~/Customer/Home/Index");
         }
         [HttpPost]
         public ActionResult RemoveCart(int productId)
@@ -145,10 +146,6 @@ namespace BaiTap.Areas.Customer.Controllers
             return RedirectToAction("OrderConfirmation", new { orderId = newOrder.orderId });
 
         }
-        
-
-
-
 
     }
 

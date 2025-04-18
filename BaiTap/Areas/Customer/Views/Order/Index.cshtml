@@ -50,7 +50,7 @@
                 @if (item.status == "Pending")
                 {
                     <button class="btn btn-primary pay-momo" data-order-id="@item.orderId">Thanh toán MOMO</button>
-                    <button class="btn btn-success pay-vnpay" data-order-id="@item.orderId" data-amount="@item.finalAmount">Thanh toán VNPay</button>
+                    @*<button class="btn btn-success pay-vnpay" data-order-id="@item.orderId" data-amount="@item.finalAmount">Thanh toán VNPay</button>*@
                 }
                 @Html.ActionLink("Huỷ đơn hàng", "Delete", new { id = item.orderId }, new { @class = "btn btn-danger", onclick = "return confirmDelete();" })
             </td>

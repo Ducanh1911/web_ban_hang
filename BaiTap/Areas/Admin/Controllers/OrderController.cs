@@ -40,8 +40,6 @@ namespace BaiTap.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-
-            // Cập nhật chỉ trạng thái (vì các trường khác bị ẩn và không cho sửa)
             order.status = model.status;
 
             _db.SaveChanges();

@@ -130,7 +130,7 @@ namespace BaiTap.Controllers
             //if (u == null) { return false; }
             u.fullName = user.fullName;
             u.email = user.email;
-            u.passwordHash = user.passwordHash;
+            //u.passwordHash = user.passwordHash;
             u.phoneNumber = user.phoneNumber;
             u.address = user.address;
             u.role = user.role;

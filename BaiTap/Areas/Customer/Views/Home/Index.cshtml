@@ -98,7 +98,48 @@
         .text-primary {
             font-size: 20px;
         }
+
+        .search-container {
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+            .search-input:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0,123,255,0.3);
+            }
     </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('productSearch');
+            const productCards = document.querySelectorAll('.product-card');
+
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
+                productCards.forEach(card => {
+                    const productName = card.querySelector('.product-name').textContent.toLowerCase();
+                    if (productName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 }
 
 <div class="main-container">
@@ -120,6 +161,9 @@
 
     <!-- Product Grid -->
     <div class="w-100">
+        <div class="search-container">
+            <input type="text" id="productSearch" class="search-input" placeholder="Tìm kiếm sản phẩm..." />
+        </div>
         <div class="product-grid">
             @foreach (var item in Model)
             {
@@ -151,12 +195,16 @@
         </div>
     </div>
 </div>
+
 @if (TempData["AddMessage"] != null)
 {
-    <div class="toast show position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1050; background-color: #ffffff;" role="alert">
-        <div class="toast-header">
-            <strong class="me-auto">Thông báo</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+    <div class="toast show position-fixed top-50 start-50 translate-middle p-5"
+         style="z-index: 1050; background-color: #ffffff; width: 600px; font-size: 1.5rem;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.3); border-radius: 15px;"
+         role="alert">
+        <div class="toast-header" style="font-size: 1.5rem;">
+            <strong class="me-auto">🔔 THÔNG BÁO</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
             @TempData["AddMessage"]

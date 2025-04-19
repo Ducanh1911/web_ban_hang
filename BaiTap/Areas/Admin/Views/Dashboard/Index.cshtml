@@ -116,34 +116,60 @@
     <h3>Biểu Đồ loại sản phẩm</h3>
     <canvas id="categoryChart" height="100"></canvas>
 </div>
-
 @section Scripts {
+    <!-- Thêm thư viện Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    (function () {
-        var ctx = document.getElementById("categoryChart");
-        if (ctx) {
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: @Html.Raw(Json.Encode(ViewBag.CategoryLabels)),
-                    datasets: [{
-                        label: 'Số lượng',
-                        data: @Html.Raw(Json.Encode(ViewBag.CategoryData)),
-                        backgroundColor: '#007bff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: 'Sản phẩm theo loại'
+        (function () {
+            var ctx = document.getElementById("categoryChart");
+            if (ctx) {
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: @Html.Raw(Json.Encode(ViewBag.CategoryLabels)), // Mã hóa JSON đúng cách
+                        datasets: [{
+                            label: 'Số lượng sản phẩm',
+                            data: @Html.Raw(Json.Encode(ViewBag.CategoryData)), // Mã hóa JSON đúng cách
+                            backgroundColor: '#007bff', // Màu xanh dương giống cũ
+                            borderColor: '#007bff', // Màu viền giống cũ
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Số lượng sản phẩm'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Danh mục'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Số lượng sản phẩm theo danh mục',
+                                font: {
+                                    size: 18
+                                }
+                            }
                         }
                     }
-                }
-            });
-        }
-    })();
+                });
+            } else {
+                console.error("Canvas element 'categoryChart' not found!");
+            }
+        })();
     </script>
 }

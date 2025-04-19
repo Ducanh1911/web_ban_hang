@@ -108,13 +108,13 @@ namespace BaiTap.Areas.Customer.Controllers
             {
                 return Redirect("~/User/Login");
             }
-
+            //chuyen doi string sang list int
             var productIds = selectedProductIds
                 .Split(',')
                 .Where(id => int.TryParse(id, out _))
                 .Select(int.Parse)
                 .ToList();
-
+            //lay sp user chon
             var cartItems = _db.Carts
                 .Where(c => c.userId == userId && productIds.Contains(c.productId))
                 .ToList();

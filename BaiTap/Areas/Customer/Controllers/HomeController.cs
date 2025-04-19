@@ -30,7 +30,6 @@ namespace BaiTap.Areas.Customer.Controllers
             return View(products.ToList());
         }
 
-        [RoleUser]
         public ActionResult Detail(int id)
         {
             var product = _db.Products.FirstOrDefault(p => p.productId == id);

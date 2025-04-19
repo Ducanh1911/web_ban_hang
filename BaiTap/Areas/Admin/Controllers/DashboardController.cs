@@ -22,7 +22,7 @@ namespace BaiTap.Areas.Admin.Controllers
 
             var orders = db.Orders
                 .Where(o => o.status != "Pending")
-                .ToList(); // Lấy danh sách để debug
+                .ToList();
 
             ViewBag.TotalRevenue = orders.Sum(o => (decimal?)o.totalAmount) ?? 0;
             ViewBag.OrderCount = orders.Count; 

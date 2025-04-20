@@ -16,7 +16,7 @@ namespace BaiTap.Areas.Customer.Controllers
         {
             _db = db;
         }
-
+        
         public ActionResult Cart()
         {
             var userId = SessionConfig.GetUserId();
@@ -123,6 +123,16 @@ namespace BaiTap.Areas.Customer.Controllers
             {
                 TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong giỏ hàng";
                 return RedirectToAction("Cart");
+            }
+            // mua sản phẩm số lượng sẽ trừ đi
+            foreach (var item in cartItems)
+            {
+                var product = _db.Products.FirstOrDefault(p => p.productId == item.productId);
+                if (product != null)
+                {
+                    product.stock -= item.quantity;
+                    if (product.stock < 0) product.stock = 0; // hoặc throw lỗi nếu không cho âm
+                }
             }
 
             var newOrder = new Order

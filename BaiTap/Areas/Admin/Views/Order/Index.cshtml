@@ -4,12 +4,13 @@
     ViewBag.Title = "Đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
 }
+<a href="@Url.Action("ExportExcel", "Order", new { area = "Admin" })" class="btn btn-primary">Xuất Excel</a>
 
 <table class="table">
     <tr>
         <th>STT</th>
         <th>Email</th>
-         <th>Địa chỉ</th>
+        <th>Địa chỉ</th>
         <th>
             Thành tiền
         </th>
@@ -21,32 +22,31 @@
         </th>
         <th></th>
     </tr>
-@{ int stt = 1;}
-@foreach (var item in Model) {
-    <tr>
-        <td>@stt</td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.address)
-        </td>
-        <td>
-            @String.Format("{0:N0}", item.finalAmount).Replace(",", ".")
+    @{ int stt = 1;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@stt</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.address)
+            </td>
+            <td>
+                @String.Format("{0:N0}", item.finalAmount).Replace(",", ".")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.orderDate)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.orderId }, new { @class = "btn btn-primary btn-sm" })
+            </td>
 
-
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.orderDate)
-        </td>
-        <td>
-            @Html.ActionLink("Sửa", "Edit", new { id = item.orderId }, new { @class = "btn btn-primary btn-sm" })
-        </td>
-
-    </tr>
-    stt++;
-}
+        </tr>
+        stt++;
+    }
 </table>

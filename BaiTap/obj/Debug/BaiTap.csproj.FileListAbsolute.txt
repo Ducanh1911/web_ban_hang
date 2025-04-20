@@ -326,3 +326,20 @@ D:\New folder\web_ban_hang\BaiTap\bin\System.Web.Optimization.xml
 D:\New folder\web_ban_hang\BaiTap\bin\Newtonsoft.Json.xml
 D:\New folder\web_ban_hang\BaiTap\bin\Antlr3.Runtime.pdb
 D:\New folder\web_ban_hang\BaiTap\obj\Debug\BaiTap.csproj.Up2Date
+D:\web_ban_hang\BaiTap\bin\ClosedXML.dll
+D:\web_ban_hang\BaiTap\bin\ClosedXML.Parser.dll
+D:\web_ban_hang\BaiTap\bin\DocumentFormat.OpenXml.dll
+D:\web_ban_hang\BaiTap\bin\DocumentFormat.OpenXml.Framework.dll
+D:\web_ban_hang\BaiTap\bin\ExcelNumberFormat.dll
+D:\web_ban_hang\BaiTap\bin\Microsoft.Bcl.HashCode.dll
+D:\web_ban_hang\BaiTap\bin\RBush.dll
+D:\web_ban_hang\BaiTap\bin\SixLabors.Fonts.dll
+D:\web_ban_hang\BaiTap\bin\ClosedXML.pdb
+D:\web_ban_hang\BaiTap\bin\ClosedXML.xml
+D:\web_ban_hang\BaiTap\bin\ClosedXML.Parser.xml
+D:\web_ban_hang\BaiTap\bin\DocumentFormat.OpenXml.xml
+D:\web_ban_hang\BaiTap\bin\DocumentFormat.OpenXml.Framework.xml
+D:\web_ban_hang\BaiTap\bin\ExcelNumberFormat.xml
+D:\web_ban_hang\BaiTap\bin\Microsoft.Bcl.HashCode.xml
+D:\web_ban_hang\BaiTap\bin\RBush.xml
+D:\web_ban_hang\BaiTap\bin\SixLabors.Fonts.xml

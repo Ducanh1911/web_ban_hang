@@ -157,8 +157,7 @@ namespace BaiTap.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult PaymentCallBack()
         {
-            // This action can be used to handle MOMO's IPN notifications
-            // For now, we'll just log the callback and return a success response
+
             Debug.WriteLine("Received MOMO IPN callback");
             return new HttpStatusCodeResult(200);
         }

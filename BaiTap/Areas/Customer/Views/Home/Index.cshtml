@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BaiTap.Models.Product>
+﻿@model PagedList.IPagedList<BaiTap.Models.Product>
+@using PagedList.Mvc
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -117,6 +118,51 @@
                 border-color: #007bff;
                 box-shadow: 0 0 5px rgba(0,123,255,0.3);
             }
+
+        .pagination-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Custom pagination styles */
+        .pagination {
+            font-size: 1.5rem; /* Larger font size for page numbers */
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+            .pagination li {
+                margin: 0 5px;
+            }
+
+            .pagination a, .pagination span {
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                text-decoration: none;
+                color: #333;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+                .pagination a:hover {
+                    background-color: #007bff;
+                    color: #fff;
+                    border-color: #007bff;
+                }
+
+            .pagination .current {
+                background-color: #007bff;
+                color: #fff;
+                border-color: #007bff;
+                font-weight: bold;
+            }
+
+            .pagination .disabled span {
+                color: #aaa;
+                border-color: #ddd;
+                cursor: not-allowed;
+            }
     </style>
 }
 
@@ -127,18 +173,19 @@
             const productCards = document.querySelectorAll('.product-card');
 
             searchInput.addEventListener('input', function () {
-                const searchTerm = searchInput.value.trim().toLowerCase();
-
-                productCards.forEach(card => {
-                    const productName = card.querySelector('.product-name').textContent.toLowerCase();
-                    if (productName.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
+                const searchTerm = searchInput.value.trim();
+                window.location.href = '@Url.Action("Index", "Home", new { area = "Customer", categoryId = ViewBag.CategoryId })' + '?search=' + encodeURIComponent(searchTerm);
             });
         });
+    </script>
+    <script>
+        setTimeout(function () {
+            var toast = document.querySelector('.toast');
+            if (toast) {
+                var bsToast = new bootstrap.Toast(toast);
+                bsToast.hide();
+            }
+        }, 3000);
     </script>
 }
 
@@ -162,7 +209,7 @@
     <!-- Product Grid -->
     <div class="w-100">
         <div class="search-container">
-            <input type="text" id="productSearch" class="search-input" placeholder="Tìm kiếm sản phẩm..." />
+            <input type="text" id="productSearch" class="search-input" placeholder="Tìm kiếm sản phẩm..." value="@ViewBag.Search" />
         </div>
         <div class="product-grid">
             @foreach (var item in Model)
@@ -175,8 +222,8 @@
                     <div class="price">
                         @if (item.discount > 0)
                         {
-                            <span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".") </span>
-                            <span class="discounted-price">@String.Format("{0:N0}", item.price - item.discount).Replace(",", ".") </span>
+                            <span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                            <span class="discounted-price">@String.Format("{0:N0}", item.price - item.discount).Replace(",", ".")</span>
                         }
                         else
                         {
@@ -193,6 +240,12 @@
                 </div>
             }
         </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            Trang @(Model.PageNumber) / @(Model.PageCount)
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, search = ViewBag.Search, categoryId = ViewBag.CategoryId }))
+        </div>
     </div>
 </div>
 
@@ -203,7 +256,7 @@
                 box-shadow: 0 8px 24px rgba(0,0,0,0.3); border-radius: 15px;"
          role="alert">
         <div class="toast-header" style="font-size: 1.5rem;">
-            <strong class="me-auto">🔔 THÔNG BÁO</strong>
+            <strong class="me-auto">THÔNG BÁO</strong>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">

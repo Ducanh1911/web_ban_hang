@@ -28,8 +28,8 @@
 <header class="header">
     <div id="menu-btn" class="fas fa-bars"></div>
 
-    <a href="#" class="logo" style="text-decoration: none;">Tạp Hoá</a>
-
+    <a href="~/Customer/Home/Index" class="logo" style="text-decoration: none;">Tạp Hoá HC</a>
+        
     <nav class="navbar">
         <a href="~/Customer/Home" style="text-decoration: none;">Home</a>
         <a href="#about" style="text-decoration: none;">about</a>
@@ -48,7 +48,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="~/User/Profile">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger" href="~/User/Login">Đăng xuất</a></li>
+                <li><a class="dropdown-item text-danger" href="~/User/Logout">Đăng xuất</a></li>
             </ul>
             <a class="btn btn-primary" href="~/Customer/Cart/Cart"><i class="fas fa-cart-plus"></i></a>
         </div>
@@ -60,7 +60,7 @@
     
 </header>
     
-    <main role="main" class="pb-3" style="margin-top: 85px">
+    <main role="main" class="pb-3" style="margin-top: 80px">
         @RenderBody()
     </main>
 

@@ -1,5 +1,7 @@
 ﻿using BaiTap.App_Start;
+using BaiTap.Areas.Admin.Servive;
 using BaiTap.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.EnterpriseServices;
@@ -17,17 +19,26 @@ namespace BaiTap.Areas.Customer.Controllers
             _db = db;
         }
 
-        public ActionResult Index(int? categoryId)
+        public ActionResult Index(int? page, string search = "", int? categoryId = null)
         {
-            var products = _db.Products.AsQueryable();
+            int pageSize = 8; // Number of products per page
+            int pageNumber = (page ?? 1); // Default to page 1 if not specified
 
-            if (categoryId.HasValue)
-            {
-                products = products.Where(p => p.categoryId == categoryId.Value);
-            }
+            // Get products with optional search and category filtering
+            var products = _db.Products
+                .Where(p => (string.IsNullOrEmpty(search) || p.productName.ToLower().Contains(search.ToLower()))
+                         && (!categoryId.HasValue || p.categoryId == categoryId))
+                .OrderBy(p => p.productId);
 
-            ViewBag.Categories = _db.Categories.ToList(); 
-            return View(products.ToList());
+            // Convert to PagedList
+            var pagedProducts = products.ToPagedList(pageNumber, pageSize);
+
+            // Pass categories for sidebar
+            ViewBag.Categories = _db.Categories.ToList();
+            ViewBag.Search = search;
+            ViewBag.CategoryId = categoryId;
+
+            return View(pagedProducts);
         }
 
         public ActionResult Detail(int id)

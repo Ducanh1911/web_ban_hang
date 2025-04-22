@@ -14,7 +14,7 @@ using BaiTap.App_Start;
 
 namespace BaiTap.Areas.Admin.Controllers
 {
-    //[RoleUser]
+    [RoleUser]
     public class ProductController : Controller
     {
         public readonly ShopEntities _db;

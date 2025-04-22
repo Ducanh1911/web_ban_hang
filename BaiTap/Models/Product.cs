@@ -11,7 +11,8 @@ namespace BaiTap.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,11 +25,20 @@ namespace BaiTap.Models
         }
     
         public int productId { get; set; }
+        [Required]
         public string productName { get; set; }
+        [MaxLength(255)]
         public string description { get; set; }
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Gia san pham phai > 0")]
         public decimal price { get; set; }
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "giam gia phai > 0")]
         public Nullable<decimal> discount { get; set; }
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "so luong phai > 0")]
         public int stock { get; set; }
+        [Required]
         public Nullable<int> categoryId { get; set; }
         public string imageUrl { get; set; }
         public Nullable<System.DateTime> createdAt { get; set; }

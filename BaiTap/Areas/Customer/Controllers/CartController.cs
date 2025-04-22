@@ -131,7 +131,6 @@ namespace BaiTap.Areas.Customer.Controllers
                 if (product != null)
                 {
                     product.stock -= item.quantity;
-                    if (product.stock < 0) product.stock = 0; // hoặc throw lỗi nếu không cho âm
                 }
             }
 

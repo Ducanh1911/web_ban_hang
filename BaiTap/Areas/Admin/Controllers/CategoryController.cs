@@ -34,6 +34,13 @@ namespace BaiTap.Areas.Admin.Controllers
             }
             return View(category);
         }
-      
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var dmuc = _db.Categories.FirstOrDefault(c => c.categoryId == id);
+            _db.Categories.Remove(dmuc);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -33,8 +33,6 @@
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-
                             <div class="form-group mb-3">
                                 @Html.LabelFor(m => m.email, "Email", new { @class = "control-label" })
                                 @Html.TextBoxFor(m => m.email, new

@@ -11,7 +11,8 @@ namespace BaiTap.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,10 +24,14 @@ namespace BaiTap.Models
         }
     
         public int userId { get; set; }
+        [Required]
         public string fullName { get; set; }
+        [Required]
         public string email { get; set; }
         public string passwordHash { get; set; }
+        [Required]
         public string phoneNumber { get; set; }
+        [Required]
         public string address { get; set; }
         public string role { get; set; }
         public Nullable<System.DateTime> createdAt { get; set; }

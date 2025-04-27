@@ -85,5 +85,10 @@ namespace BaiTap.Areas.Customer.Controllers
             }
             return View(product);
         }
+
+        public ActionResult ThanhToanThanhCong()
+        {
+            return View();
+        }
     }
 }

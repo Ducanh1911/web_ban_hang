@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Thanh Toán Thành Công";
+}
+
+<h2>Thanh Toán Thành Công</h2>
+
+<div class="alert alert-success">
+    <strong>Chúc mừng!</strong> Bạn đã thanh toán thành công.
+</div>
+
+<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Đơn hàng của bạn đang được xử lý và sẽ được giao trong thời gian sớm nhất.</p>
+
+<a href="@Url.Action("Index", "Home", new { area = "Customer" })" class="btn btn-primary">Trở về trang chủ</a>

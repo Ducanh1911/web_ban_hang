@@ -10,6 +10,7 @@ using System.Diagnostics;
 namespace BaiTap.Areas.Customer.Controllers
 {
     [RoleUser]
+    [RouteArea("Customer")]
     public class OrderController : Controller
     {
         private readonly ShopEntities _db;
@@ -163,19 +164,25 @@ namespace BaiTap.Areas.Customer.Controllers
         }
 
         // Handle MOMO return URL
-        public ActionResult ReturnFromMomo(string orderId, string resultCode, string message)
+        // Handle MOMO return URL
+        //[HttpGet]
+        public ActionResult ReturnFromMomo()
         {
+            string orderId = Request.QueryString["orderId"];
+            string resultCode = Request.QueryString["resultCode"];
+            string message = Request.QueryString["message"];
+
             if (resultCode == "0")
             {
                 TempData["SuccessMessage"] = "Thanh toán thành công!";
-                return RedirectToAction("~/Customer/Order/Index");
+                return RedirectToAction("ThanhToanThanhCong", "Home", new { area = "Customer" });
             }
             else
             {
                 TempData["ErrorMessage"] = $"Thanh toán thất bại: {message}";
+                return RedirectToAction("Index", "Order", new { area = "Customer" });
             }
-
-            return RedirectToAction("Index");
         }
+
     }
 }

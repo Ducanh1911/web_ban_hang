@@ -2208,6 +2208,7 @@
     <Content Include="Areas\Admin\Views\Order\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Create.cshtml" />
+    <Content Include="Areas\Customer\Views\Home\ThanhToanThanhCong.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

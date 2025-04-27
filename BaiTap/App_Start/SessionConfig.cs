@@ -14,7 +14,7 @@ namespace BaiTap.App_Start
         }
         public static void SetUserId(int userId)
         {
-            HttpContext.Current.Session["UserId"] = userId;
+            HttpContext.Current.Session["userId"] = userId;
         }
         public static User GetUser()
         {
@@ -22,7 +22,7 @@ namespace BaiTap.App_Start
         }
         public static int? GetUserId()
         {
-            return HttpContext.Current.Session["UserId"] as int?;
+            return HttpContext.Current.Session["userId"] as int?;
         }
     }
 }

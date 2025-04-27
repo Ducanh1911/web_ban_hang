@@ -1,53 +1,73 @@
-﻿@model IEnumerable<BaiTap.Models.Order>
+﻿@using PagedList.Mvc
+@using PagedList
+@model PagedList.IPagedList<BaiTap.Models.Order>
 
 @{
     ViewBag.Title = "Đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
 }
-<h2>Đơn hàng</h2>
-<a href="@Url.Action("ExportExcel", "Order", new { area = "Admin" })" class="btn btn-primary">Xuất Excel</a>
+<h2>Đơn Hàng</h2>
+
+<form method="get" class="d-flex justify-content-between">
+    <!-- Lọc theo trạng thái -->
+    <select name="statusFilter" class="form-control d-inline-block" style="width: 200px;" onchange="submitOnChange(this)">
+        <option value="">Lọc theo trạng thái</option>
+        @foreach (var status in ViewBag.StatusList)
+        {
+            <option value="@status" @(status == ViewBag.CurrentFilter ? "selected" : "")>@status</option>
+        }
+    </select>
+
+    <div class="d-flex align-items-center ml-2">
+        <button type="submit" formaction="~/Admin/Order/ExportExcel" class="btn btn-primary">Xuất Excel</button>
+    </div>
+</form>
+
+<script>
+    function submitOnChange(selectElement) {
+        // Nếu chọn "Tất cả trạng thái", không submit
+        if (selectElement.value !== "") {
+            selectElement.form.submit();
+        }
+    }
+</script>
+
+
 
 <table class="table">
     <tr>
         <th>STT</th>
         <th>Email</th>
         <th>Địa chỉ</th>
-        <th>
-            Thành tiền
-        </th>
-        <th>
-            Trạng thái
-        </th>
-        <th>
-            Ngày đặt đơn
-        </th>
-        <th></th>
+        <th>Thành tiền</th>
+        <th>Trạng thái</th>
+        <th>Ngày đặt đơn</th>
+        <th>Thao tác</th>
     </tr>
-    @{ int stt = 1;}
+
+    @{ int STT = 1; }
     @foreach (var item in Model)
     {
         <tr>
-            <td>@stt</td>
+            <td>@STT</td>
+            <td>@Html.DisplayFor(modelItem => item.User.email)</td>
+            <td>@Html.DisplayFor(modelItem => item.User.address)</td>
+            <td>@String.Format("{0:N0}", item.finalAmount).Replace(",", ".")</td>
+            <td>@Html.DisplayFor(modelItem => item.status)</td>
+            <td>@Html.DisplayFor(modelItem => item.orderDate)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.email)
+                @Html.ActionLink("Edit", "Edit", new { id = item.orderId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.orderId }, new { onclick = "return confirmDelete(" + item.orderId + ");" })
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.address)
-            </td>
-            <td>
-                @String.Format("{0:N0}", item.finalAmount).Replace(",", ".")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.orderDate)
-            </td>
-            <td>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.orderId }, new { @class = "btn btn-primary btn-sm" })
-            </td>
-
         </tr>
-        stt++;
+        STT++;
     }
 </table>
+
+<!-- Phân trang -->
+<div class="pagination-container">
+    <span class="page-info">Trang @(Model.PageNumber) / @(Model.PageCount)</span>
+    <div class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, statusFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>

@@ -16,7 +16,7 @@ namespace BaiTap.Controllers
 
     public class UserController : Controller
     {
-        private readonly ShopEntities _db = new ShopEntities();
+        private readonly ShopEntities _db;
         private readonly UserService _userService;
 
         public UserController(UserService userService, ShopEntities db)
@@ -30,13 +30,14 @@ namespace BaiTap.Controllers
 
         public ActionResult Profile()
         {
-            var user = BaiTap.App_Start.SessionConfig.GetUser();
+            var userId = SessionConfig.GetUserId();
+            var user = _db.Users.FirstOrDefault(u => u.userId == userId);
             if (user == null)
             {
-                return RedirectToAction("Login");
+                return HttpNotFound();
             }
-            return View(user);
 
+            return View(user); 
         }
         public ActionResult Login()
         {
@@ -187,6 +188,7 @@ namespace BaiTap.Controllers
         }
 
         // GET: User/EditProfile
+        [RoleUser]
         public ActionResult EditProfile()
         {
             var userId = SessionConfig.GetUserId();
@@ -199,15 +201,11 @@ namespace BaiTap.Controllers
         }
 
         // POST: User/EditProfile
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(User model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult EditProfile(User model)
+        {   
             var userId = SessionConfig.GetUserId();
             var user = _db.Users.FirstOrDefault(u => u.userId == userId);
             if (user == null)
@@ -220,7 +218,6 @@ namespace BaiTap.Controllers
             user.address = model.address;
             _db.SaveChanges();
 
-            // Cập nhật lại thông tin mới trong Session
             SessionConfig.SetUser(user);
 
             TempData["Success"] = "Cập nhật thông tin thành công.";

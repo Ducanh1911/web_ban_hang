@@ -1,6 +1,7 @@
 ﻿using BaiTap.App_Start;
 using BaiTap.Models;
 using ClosedXML.Excel;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,10 +20,29 @@ namespace BaiTap.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public ActionResult Index()
+        public ActionResult Index(string statusFilter, int? page)
         {
-            return View(_db.Orders.ToList());
+            var orders = _db.Orders.AsQueryable();
+
+            if (!string.IsNullOrEmpty(statusFilter))
+            {
+                orders = orders.Where(o => o.status == statusFilter);
+            }
+
+            ViewBag.StatusList = _db.Orders
+                                    .Select(o => o.status)
+                                    .Distinct()
+                                    .ToList();
+
+            ViewBag.CurrentFilter = statusFilter;
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1); // Mặc định là trang 1 nếu không có tham số trang
+
+            // Trả về danh sách đơn hàng đã phân trang
+            return View(orders.OrderBy(o => o.orderId).ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult Edit(int id)
         {
             var order = _db.Orders.FirstOrDefault(o => o.orderId == id);

@@ -1,86 +1,87 @@
-﻿@model  List<BaiTap.Models.Cart>
+﻿@model List<BaiTap.Models.Cart>
 @{
     ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Giỏ hàng của bạn</h2>
-<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>
-<a href="@Url.Action("Index", "Order")" class="btn btn-primary">Đơn hàng đã mua</a>
-<table class="table">
-    <thead>
-        <tr>
-            <th>STT</th>
-            <th>Tên sản phẩm</th>
-            <th>Hình ảnh</th>
-            <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Tổng tiền</th>
-            <th>Action</th>
-            <th></th>
+<div class="dhang">
+    <a href="@Url.Action("Index", "Order")" class="btn btn-primary">Đơn hàng đã mua</a>
+</div>
 
-        </tr>
-    </thead>
-    <tbody>
-        @{ int stt = 1; }
-
-        @foreach (var item in Model)
-        {
+<div class="table-container">
+    <table class="table">
+        <thead>
             <tr>
-                <td>@stt</td>
-                <td>@item.Product.productName</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.Product.imageUrl))
-                    {
-                        <img src="@Url.Content(item.Product.imageUrl)" alt="Image" style="width: 100px; height: auto;" />
-                    }
-                    else
-                    {
-                        <span>No image</span>
-                    }
-                </td>
-                <td>@item.Product.price.ToString("#,0").Replace(",", ".")</td>
-                <td>
-                    <form action="@Url.Action("UpdateQuantity", "Cart")" method="post" style="display: inline;">
-                        <input type="hidden" name="productId" value="@item.productId" />
-                        <input type="hidden" name="change" value="-1" />
-                        <button type="submit">-</button>
-                    </form>
-
-                    <span>@item.quantity</span>
-
-                    <form action="@Url.Action("UpdateQuantity", "Cart")" method="post" style="display: inline;">
-                        <input type="hidden" name="productId" value="@item.productId" />
-                        <input type="hidden" name="change" value="1" />
-                        <button type="submit">+</button>
-                    </form>
-                </td>
-                <td id="total-@item.productId">
-                    @(((decimal)item.quantity * (decimal)item.Product.price).ToString("#,0").Replace(",", "."))
-                </td>
-
-
-                <td>
-                    <form action="@Url.Action("RemoveCart", "Cart")" method="post" onsubmit="return confirmDelete(@item.productId);">
-                        <input type="hidden" name="productId" value="@item.productId" />
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-                <td>
-                    <input type="checkbox" name="selectedProducts" value="@item.Product.productId" />
-                    <label for="selectedProducts"></label>
-                </td>
+                <th>STT</th>
+                <th>Tên sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng tiền</th>
+                <th>Action</th>
+                <th></th>
             </tr>
-            stt++;
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{ int stt = 1; }
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@stt</td>
+                    <td>@item.Product.productName</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Product.imageUrl))
+                        {
+                            <img src="@Url.Content(item.Product.imageUrl)" alt="Image" style="width: 100px; height: auto;" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                    </td>
+                    <td>@item.Product.price.ToString("#,0").Replace(",", ".")</td>
+                    <td>
+                        <form action="@Url.Action("UpdateQuantity", "Cart")" method="post" style="display: inline;">
+                            <input type="hidden" name="productId" value="@item.productId" />
+                            <input type="hidden" name="change" value="-1" />
+                            <button type="submit">-</button>
+                        </form>
+
+                        <span>@item.quantity</span>
+
+                        <form action="@Url.Action("UpdateQuantity", "Cart")" method="post" style="display: inline;">
+                            <input type="hidden" name="productId" value="@item.productId" />
+                            <input type="hidden" name="change" value="1" />
+                            <button type="submit">+</button>
+                        </form>
+                    </td>
+                    <td id="total-@item.productId">
+                        @(((decimal)item.quantity * (decimal)item.Product.price).ToString("#,0").Replace(",", "."))
+                    </td>
+
+                    <td>
+                        <form action="@Url.Action("RemoveCart", "Cart")" method="post" onsubmit="return confirmDelete(@item.productId);">
+                            <input type="hidden" name="productId" value="@item.productId" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="selectedProducts" value="@item.Product.productId" />
+                        <label for="selectedProducts"></label>
+                    </td>
+                </tr>
+                stt++;
+            }
+        </tbody>
+    </table>
+</div>
 
 <h4>Tổng tiền: <span id="totalAmount">0</span> VNĐ</h4>
 <form id="checkoutForm" action="@Url.Action("Checkout", "Cart")" method="post">
     <input type="hidden" name="selectedProductIds" id="selectedProductIds" value="" />
     <button type="button" class="btn btn-primary" onclick="submitCheckout()">Mua ngay</button>
 </form>
-
 
 <script>
     function updateTotal() {
@@ -89,7 +90,6 @@
             let productId = checkbox.value;
             let totalPrice = document.getElementById("total-" + productId).innerText.replace(/\./g, '');
             total += parseInt(totalPrice);
-
         });
         document.getElementById("totalAmount").innerText = total.toLocaleString();
     }
@@ -116,6 +116,7 @@
             return;
         }
     }
+
     function confirmDelete(url) {
         if (confirm("Xoá sản phẩm này khỏi giỏ hàng")) {
             window.location.href = url;
@@ -125,5 +126,61 @@
             return false;
         }
     }
-
 </script>
+
+<style>
+    /* Thêm khoảng cách trái phải cho bảng */
+    .table-container {
+        margin-left: 100px; /* Khoảng cách trái và phải */
+        margin-right: 100px;
+    }
+
+    /* Cải thiện kiểu bảng giỏ hàng */
+    .table {
+        width: 100%;
+        border-collapse: collapse; /* Thay vì border-spacing, sử dụng border-collapse để không bị khoảng cách giữa các ô */
+    }
+    .dhang{
+        margin-top: 100px;
+    }
+        /* Các ô trong bảng */
+        .table th, .table td {
+            padding: 12px 20px; /* Thêm padding trái và phải cho ô bảng */
+            text-align: center;
+            font-size: 15px; /* Cỡ chữ trong bảng */
+        }
+
+    button {
+        font-size: 1rem;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+    }
+
+        button:hover {
+            background-color: #f0f0f0;
+        }
+
+    /* Khoảng cách và căn chỉnh cho các hành động */
+    form {
+        display: inline;
+        margin-right: 10px;
+    }
+
+    /* Thêm khoảng cách cho các checkbox */
+    td input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    /* Thêm style cho các label */
+    td label {
+        margin-left: 5px;
+    }
+
+    /* Cải thiện hộp nhập liệu */
+    input[type="text"], input[type="number"], input[type="hidden"] {
+        padding: 5px;
+        border-radius: 5px;
+    }
+</style>

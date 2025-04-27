@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-</br>
 <h2 class="page-title text-center">Chi tiết đơn hàng</h2>
 
 @if (TempData["SuccessMessage"] != null)
@@ -40,7 +39,7 @@
                     <td>
                         @if (item.status == "Pending")
                         {
-                            <button class="btn btn-primary pay-momo" data-order-id="@item.orderId">Thanh toán MOMO</button>
+                            <a href="@Url.Action("PayWithMomo", new { orderId = item.orderId })" class="btn btn-primary">Thanh toán MOMO</a>
                         }
                         @if (item.status != "Shipped")
                         {
@@ -53,156 +52,11 @@
     </table>
 </div>
 
-<!-- Modal hiển thị QR code MOMO -->
-<div class="modal fade" id="momoModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Thanh toán bằng MOMO</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>×</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <p>Quét mã QR bằng ứng dụng MOMO để thanh toán</p>
-                <div id="qrcode"></div>
-                <div class="mt-3">
-                    <a id="openMomo" href="#" class="btn btn-primary" target="_blank">Mở ứng dụng MOMO</a>
-                </div>
-                <div class="mt-3">
-                    <button id="checkPaymentStatus" class="btn btn-success" data-order-id="" data-request-id="" data-unique-order-id="">Kiểm tra trạng thái</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal xác nhận thanh toán VNPay -->
-<div class="modal fade" id="vnpayModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Thanh toán bằng VNPay</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>×</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <p>Bạn sẽ được chuyển đến trang thanh toán VNPay</p>
-                <p>Số tiền: <span id="vnpayAmount"></span> VNĐ</p>
-                <div class="mt-3">
-                    <a id="proceedToVNPay" href="#" class="btn btn-success" target="_blank">Tiếp tục thanh toán</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 @section scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         function confirmDelete() {
             return confirm("Bạn có chắc muốn huỷ đơn hàng này?");
         }
-
-        $(document).ready(function () {
-            $('.pay-momo').click(function () {
-                var orderId = $(this).data('order-id');
-
-                $.ajax({
-                    url: '@Url.Action("PayWithMomo")',
-                    type: 'POST',
-                    data: { orderId: orderId },
-                    success: function (response) {
-                        if (response.success) {
-                            // Generate QR code
-                            $('#qrcode').empty();
-                            new QRCode(document.getElementById("qrcode"), response.paymentUrl);
-
-                            // Update link to open MOMO app
-                            $('#openMomo').attr('href', response.paymentUrl);
-
-                            // Store orderId, requestId, and uniqueOrderId for status checking
-                            $('#checkPaymentStatus').data('order-id', orderId);
-                            $('#checkPaymentStatus').data('request-id', response.requestId);
-                            $('#checkPaymentStatus').data('unique-order-id', response.orderId);
-
-                            // Show modal
-                            $('#momoModal').modal('show');
-
-                            // Open paymentUrl in a new tab
-                            window.open(response.paymentUrl, '_blank');
-                        } else {
-                            alert('Có lỗi xảy ra: ' + response.message);
-                        }
-                    },
-                    error: function () {
-                        alert('Có lỗi xảy ra khi kết nối với server');
-                    }
-                });
-            });
-
-            // Check payment status with retry mechanism
-            $('#checkPaymentStatus').click(function () {
-                var orderId = $(this).data('order-id');
-                var requestId = $(this).data('request-id');
-                var uniqueOrderId = $(this).data('unique-order-id');
-
-                function checkStatus(attemptsLeft) {
-                    $.ajax({
-                        url: '@Url.Action("CheckPaymentStatus")',
-                        type: 'POST',
-                        data: { orderId: orderId, requestId: requestId, uniqueOrderId: uniqueOrderId },
-                        success: function (response) {
-                            if (response.success) {
-                                alert(response.message);
-                                $('#momoModal').modal('hide');
-                                location.reload();
-                            } else if (attemptsLeft > 0 && response.message.includes("Giao dịch chưa hoàn tất")) {
-                                setTimeout(function () {
-                                    checkStatus(attemptsLeft - 1);
-                                }, 2000); // Retry after 2 seconds
-                            } else {
-                                alert('Thanh toán chưa hoàn tất: ' + response.message);
-                            }
-                        },
-                        error: function () {
-                            alert('Có lỗi xảy ra khi kiểm tra trạng thái thanh toán');
-                        }
-                    });
-                }
-
-                checkStatus(3); // Retry up to 3 times
-            });
-
-            $('.pay-vnpay').click(function () {
-                var orderId = $(this).data('order-id');
-                var amount = $(this).data('amount');
-
-                $.ajax({
-                    url: '@Url.Action("CreatePayment", "VNPay", new { area = "" })',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        amount: amount,
-                        orderInfo: "Thanh toan don hang " + orderId,
-                        orderId: orderId
-                    }),
-                    success: function (response) {
-                        if (response.success) {
-                            $('#vnpayAmount').text(amount.toLocaleString('vi-VN'));
-                            $('#proceedToVNPay').attr('href', response.paymentUrl);
-                            $('#vnpayModal').modal('show');
-                        } else {
-                            alert('Có lỗi xảy ra: ' + (response.error || 'Không xác định'));
-                        }
-                    },
-                    error: function () {
-                        alert('Có lỗi xảy ra khi kết nối với server. Vui lòng thử lại sau.');
-                    }
-                });
-            });
-        });
     </script>
 }
 
@@ -214,7 +68,6 @@
         margin-bottom: 20px;
     }
 
-    /* Căn giữa bảng và giới hạn chiều rộng */
     .order-table-container {
         display: flex;
         justify-content: center;
@@ -267,14 +120,5 @@
 
         .btn-danger:hover {
             background-color: #c0392b;
-        }
-
-    .btn-success {
-        background-color: #2ecc71;
-        color: white;
-    }
-
-        .btn-success:hover {
-            background-color: #27ae60;
         }
 </style>

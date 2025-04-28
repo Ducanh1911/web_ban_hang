@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 namespace BaiTap.Areas.Customer.Controllers
 {
     [RoleUser]
@@ -108,38 +109,36 @@ namespace BaiTap.Areas.Customer.Controllers
             {
                 return Redirect("~/User/Login");
             }
-            //chuyen doi string sang list int
+
+            // Chuyển đổi selectedProductIds sang List<int>
             var productIds = selectedProductIds
                 .Split(',')
                 .Where(id => int.TryParse(id, out _))
                 .Select(int.Parse)
                 .ToList();
-            //lay sp user chon
+
+            // Lấy sản phẩm trong giỏ hàng kèm theo Product (Include tránh null)
             var cartItems = _db.Carts
+                .Include(c => c.Product)
                 .Where(c => c.userId == userId && productIds.Contains(c.productId))
                 .ToList();
 
             if (!cartItems.Any())
             {
-                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong giỏ hàng";
+                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong giỏ hàng.";
                 return RedirectToAction("Cart");
             }
-            // mua sản phẩm số lượng sẽ trừ đi
-            foreach (var item in cartItems)
-            {
-                var product = _db.Products.FirstOrDefault(p => p.productId == item.productId);
-                if (product != null)
-                {
-                    product.stock -= item.quantity;
-                }
-            }
 
+
+
+            // Tạo đơn hàng mới
             var newOrder = new Order
             {
                 userId = userId.Value,
                 orderDate = DateTime.Now,
                 totalAmount = cartItems.Sum(c => c.quantity * c.Product.price),
                 finalAmount = cartItems.Sum(c => c.quantity * c.Product.price),
+                discountAmount = 0,
                 status = "Pending",
                 OrderDetails = cartItems.Select(c => new OrderDetail
                 {
@@ -149,12 +148,29 @@ namespace BaiTap.Areas.Customer.Controllers
                     subtotal = c.quantity * c.Product.price
                 }).ToList()
             };
+
             _db.Orders.Add(newOrder);
             _db.Carts.RemoveRange(cartItems);
-            _db.SaveChanges();
-            return RedirectToAction("OrderConfirmation", new { orderId = newOrder.orderId });
 
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var eve in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Property: {ve.PropertyName} Error: {ve.ErrorMessage}");
+                    }
+                }
+                throw;
+            }
+
+            return RedirectToAction("OrderConfirmation", new { orderId = newOrder.orderId });
         }
+
 
     }
 

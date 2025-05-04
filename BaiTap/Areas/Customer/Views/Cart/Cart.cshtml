@@ -98,6 +98,24 @@
         checkbox.addEventListener("change", updateTotal);
     });
 
+    //function submitCheckout() {
+    //    let selectedProducts = [];
+    //    document.querySelectorAll('input[name="selectedProducts"]:checked').forEach(checkbox => {
+    //        selectedProducts.push(checkbox.value);
+    //    });
+
+    //    if (selectedProducts.length === 0) {
+    //        alert("Chọn ít nhất 1 sản phẩm");
+    //        return;
+    //    }
+    //    let confirmCheckout = confirm("Xác nhận mua các sản phẩm này");
+    //    if (confirmCheckout) {
+    //        document.getElementById("selectedProductIds").value = selectedProducts.join(",");
+    //        document.getElementById("checkoutForm").submit();
+    //    } else {
+    //        return;
+    //    }
+    //}
     function submitCheckout() {
         let selectedProducts = [];
         document.querySelectorAll('input[name="selectedProducts"]:checked').forEach(checkbox => {
@@ -108,13 +126,9 @@
             alert("Chọn ít nhất 1 sản phẩm");
             return;
         }
-        let confirmCheckout = confirm("Xác nhận mua các sản phẩm này");
-        if (confirmCheckout) {
-            document.getElementById("selectedProductIds").value = selectedProducts.join(",");
-            document.getElementById("checkoutForm").submit();
-        } else {
-            return;
-        }
+
+        document.getElementById("selectedProductIds").value = selectedProducts.join(",");
+        document.getElementById("checkoutForm").submit();
     }
 
     function confirmDelete(url) {

@@ -22,8 +22,6 @@ namespace BaiTap.Areas.Customer.Controllers
             _db = db;
             _momoService = new MomoService();
         }
-
-        // GET: Customer/Order
         public ActionResult Index()
         {
             var userId = SessionConfig.GetUserId();

@@ -1,11 +1,13 @@
 ﻿using BaiTap.App_Start;
 using BaiTap.Models;
-using Dynamitey.DynamicObjects;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 namespace BaiTap.Areas.Customer.Controllers
 {
     [RoleUser]
@@ -17,7 +19,7 @@ namespace BaiTap.Areas.Customer.Controllers
         {
             _db = db;
         }
-        
+
         public ActionResult Cart()
         {
             var userId = SessionConfig.GetUserId();
@@ -25,10 +27,11 @@ namespace BaiTap.Areas.Customer.Controllers
             {
                 return Redirect("~/User/Login");
             }
-            var Cart = _db.Carts
-            .Where(c => c.userId == userId)
-            .ToList();
-            return View(Cart);
+            var cart = _db.Carts
+                .Include(c => c.Product)
+                .Where(c => c.userId == userId)
+                .ToList();
+            return View(cart);
         }
 
         [HttpPost]
@@ -52,7 +55,7 @@ namespace BaiTap.Areas.Customer.Controllers
                     userId = userId,
                     productId = productId,
                     quantity = quantity,
-                    createdAt = System.DateTime.Now
+                    createdAt = DateTime.Now
                 };
                 _db.Carts.Add(newCartItem);
             }
@@ -60,6 +63,7 @@ namespace BaiTap.Areas.Customer.Controllers
             TempData["AddMessage"] = "Thêm thành công vào giỏ hàng!";
             return Redirect("~/Customer/Home/Index");
         }
+
         [HttpPost]
         public ActionResult RemoveCart(int productId)
         {
@@ -74,6 +78,7 @@ namespace BaiTap.Areas.Customer.Controllers
 
             return RedirectToAction("Cart");
         }
+
         [HttpPost]
         public ActionResult UpdateQuantity(int productId, int change)
         {
@@ -81,24 +86,10 @@ namespace BaiTap.Areas.Customer.Controllers
             var cartItem = _db.Carts.FirstOrDefault(c => c.userId == userId && c.productId == productId);
             if (cartItem != null)
             {
-                cartItem.quantity = Math.Max(1, cartItem.quantity + change); 
+                cartItem.quantity = Math.Max(1, cartItem.quantity + change);
                 _db.SaveChanges();
             }
             return RedirectToAction("Cart");
-        }
-        public ActionResult OrderConfirmation(int orderId)
-        {
-            var order = _db.Orders
-                .Include(o => o.OrderDetails.Select(od => od.Product))
-                .FirstOrDefault(o => o.orderId == orderId);
-
-            if (order == null)
-            {
-                TempData["ErrorMessage"] = "Đơn hàng không tồn tại!";
-                return RedirectToAction("Cart");
-            }
-
-            return View(order);
         }
 
         [HttpPost]
@@ -110,14 +101,12 @@ namespace BaiTap.Areas.Customer.Controllers
                 return Redirect("~/User/Login");
             }
 
-            // Chuyển đổi selectedProductIds sang List<int>
             var productIds = selectedProductIds
                 .Split(',')
                 .Where(id => int.TryParse(id, out _))
                 .Select(int.Parse)
                 .ToList();
 
-            // Lấy sản phẩm trong giỏ hàng kèm theo Product (Include tránh null)
             var cartItems = _db.Carts
                 .Include(c => c.Product)
                 .Where(c => c.userId == userId && productIds.Contains(c.productId))
@@ -129,7 +118,67 @@ namespace BaiTap.Areas.Customer.Controllers
                 return RedirectToAction("Cart");
             }
 
+            var user = _db.Users.FirstOrDefault(u => u.userId == userId) ?? new User();
+            var model = new Tuple<List<Cart>, User>(cartItems, user);
 
+            ViewBag.SelectedProductIds = selectedProductIds;
+
+            return View("Checkout", model);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmCheckout(string selectedProductIds, string fullName, string phoneNumber, string address)
+        {
+            var userId = SessionConfig.GetUserId();
+            if (userId == null)
+            {
+                return Redirect("~/User/Login");
+            }
+
+            // Validate form inputs
+            if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(address))
+            {
+                TempData["ErrorMessage"] = "Vui lòng điền đầy đủ thông tin giao hàng.";
+                return RedirectToAction("Checkout", new { selectedProductIds });
+            }
+
+            if (!Regex.IsMatch(phoneNumber, @"^[0-9]{10}$"))
+            {
+                TempData["ErrorMessage"] = "Số điện thoại phải có 10 chữ số.";
+                return RedirectToAction("Checkout", new { selectedProductIds });
+            }
+
+            // Lấy user từ database để cập nhật
+            var user = _db.Users.FirstOrDefault(u => u.userId == userId);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy thông tin người dùng.";
+                return RedirectToAction("Checkout", new { selectedProductIds });
+            }
+
+            // Cập nhật thông tin user
+            user.fullName = fullName;
+            user.phoneNumber = phoneNumber;
+            user.address = address;
+
+            // Chuyển đổi selectedProductIds sang List<int>
+            var productIds = selectedProductIds
+                .Split(',')
+                .Where(id => int.TryParse(id, out _))
+                .Select(int.Parse)
+                .ToList();
+
+            // Lấy sản phẩm trong giỏ hàng
+            var cartItems = _db.Carts
+                .Include(c => c.Product)
+                .Where(c => c.userId == userId && productIds.Contains(c.productId))
+                .ToList();
+
+            if (!cartItems.Any())
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong giỏ hàng.";
+                return RedirectToAction("Cart");
+            }
 
             // Tạo đơn hàng mới
             var newOrder = new Order
@@ -165,13 +214,27 @@ namespace BaiTap.Areas.Customer.Controllers
                         System.Diagnostics.Debug.WriteLine($"Property: {ve.PropertyName} Error: {ve.ErrorMessage}");
                     }
                 }
-                throw;
+                TempData["ErrorMessage"] = "Có lỗi xảy ra khi lưu đơn hàng.";
+                return RedirectToAction("Checkout", new { selectedProductIds });
             }
 
             return RedirectToAction("OrderConfirmation", new { orderId = newOrder.orderId });
         }
 
+        public ActionResult OrderConfirmation(int orderId)
+        {
+            var order = _db.Orders
+                .Include(o => o.OrderDetails.Select(od => od.Product))
+                .Include(o => o.User)
+                .FirstOrDefault(o => o.orderId == orderId);
 
+            if (order == null)
+            {
+                TempData["ErrorMessage"] = "Đơn hàng không tồn tại!";
+                return RedirectToAction("Cart");
+            }
+
+            return View(order);
+        }
     }
-
 }

@@ -1,0 +1,151 @@
+﻿@model Tuple<List<BaiTap.Models.Cart>, BaiTap.Models.User>
+
+@{
+    ViewBag.Title = "Thanh Toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var cartItems = Model.Item1;
+    var user = Model.Item2 ?? new BaiTap.Models.User();
+}
+
+<div class="checkout-container">
+    <h2>Thanh Toán Đơn Hàng</h2>
+
+    <!-- Thông tin giao hàng -->
+    <div class="checkout-section">
+        <h3>Thông Tin Giao Hàng</h3>
+        <form id="confirmCheckoutForm" action="@Url.Action("ConfirmCheckout", "Cart")" method="post">
+            <input type="hidden" name="selectedProductIds" value="@ViewBag.SelectedProductIds" />
+
+            <div class="form-group">
+                <label for="fullName">Họ và Tên</label>
+                <input type="text" name="fullName" id="fullName" class="form-control" value="@user.fullName" required />
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Số Điện Thoại</label>
+                <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" value="@user.phoneNumber" required pattern="[0-9]{10}" title="Số điện thoại phải có 10 chữ số" />
+            </div>
+            <div class="form-group">
+                <label for="address">Địa Chỉ</label>
+                <textarea name="address" id="address" class="form-control" required>@user.address</textarea>
+            </div>
+
+            <!-- Tóm tắt đơn hàng -->
+            <div class="order-summary">
+                <h3>Tóm Tắt Đơn Hàng</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Hình Ảnh</th>
+                            <th>Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Tổng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in cartItems)
+                        {
+                            <tr>
+                                <td>@item.Product.productName</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Product.imageUrl))
+                                    {
+                                        <img src="@Url.Content(item.Product.imageUrl)" alt="Image" style="width: 50px; height: auto;" />
+                                    }
+                                    else
+                                    {
+                                        <span>Không có ảnh</span>
+                                    }
+                                </td>
+                                <td>@item.Product.price.ToString("#,0").Replace(",", ".") VNĐ</td>
+                                <td>@item.quantity</td>
+                                <td>@((item.quantity * item.Product.price).ToString("#,0").Replace(",", ".")) VNĐ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <h4>Tổng Tiền: <span>@cartItems.Sum(c => c.quantity * c.Product.price).ToString("#,0").Replace(",", ".")</span> VNĐ</h4>
+            </div>
+
+            <!-- Nút xác nhận -->
+            <button type="submit" class="btn btn-primary">Xác Nhận Thanh Toán</button>
+            <a href="@Url.Action("Cart", "Cart")" class="btn btn-secondary">Quay Lại Giỏ Hàng</a>
+        </form>
+    </div>
+</div>
+
+<style>
+    .checkout-container {
+        margin-top: 100px;
+
+    }
+
+    .checkout-section {
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .order-summary {
+        margin-top: 30px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+</style>

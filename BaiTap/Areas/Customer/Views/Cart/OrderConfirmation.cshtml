@@ -2,45 +2,94 @@
 
 @{
     ViewBag.Title = "Chi tiết đơn hàng";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Đặt hàng thành công</h2>
+<div class="order-confirmation-container">
+    <h2>Đặt hàng thành công</h2>
 
-<p><strong>Mã đơn hàng:</strong> @Model.orderId</p>
-<p><strong>Ngày đặt:</strong> @(Model.orderDate?.ToString("dd/MM/yyyy HH:mm") ?? "Không có dữ liệu")</p>
-<p><strong>Địa chỉ nhận hàng:</strong> @Model.User.address</p>
-<p><strong>Số điện thoại:</strong> @Model.User.phoneNumber</p>
-<p><strong>Tổng tiền:</strong> @String.Format("{0:N0}", Model.totalAmount).Replace(",", ".") VNĐ</p>
+    <p><strong>Mã đơn hàng:</strong> @Model.orderId</p>
+    <p><strong>Ngày đặt:</strong> @(Model.orderDate?.ToString("dd/MM/yyyy HH:mm") ?? "Không có dữ liệu")</p>
+    <p><strong>Họ và Tên:</strong> @(Model.User?.fullName ?? "Không có dữ liệu")</p>
+    <p><strong>Số điện thoại:</strong> @(Model.User?.phoneNumber ?? "Không có dữ liệu")</p>
+    <p><strong>Địa chỉ nhận hàng:</strong> @(Model.User?.address ?? "Không có dữ liệu")</p>
+    <p><strong>Tổng tiền:</strong> @String.Format("{0:N0}", Model.totalAmount).Replace(",", ".") VNĐ</p>
 
-<h3>Chi tiết đơn hàng</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Sản phẩm</th>
-            <th>Số lượng</th>
-            <th>Giá</th>
-            <th>Tổng</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.OrderDetails)
-        {
+    <h3>Chi tiết đơn hàng</h3>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@item.Product.productName</td>
-                <td>@item.quantity</td>
-                <td>
-                    @String.Format("{0:N0}", item.price).Replace(",", ".")
-                </td>
-                <td>@(((decimal)item.quantity * (decimal)item.price).ToString("#,0").Replace(",", "."))</td>
-
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Tổng</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@item.Product.productName</td>
+                    <td>@item.quantity</td>
+                    <td>@String.Format("{0:N0}", item.price).Replace(",", ".")</td>
+                    <td>@((item.quantity * item.price).ToString("#,0").Replace(",", ".")) VNĐ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Về trang chủ</a>
+</div>
+
+<style>
+    .order-confirmation-container {
+        margin-top: 120px;
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+
+    h2 {
+        font-size: 28px; /* Tăng cỡ chữ tiêu đề */
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 24px; /* Tăng cỡ chữ tiêu đề phụ */
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    p {
+        font-size: 18px; /* Tăng cỡ chữ đoạn văn */
+        margin: 10px 0;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 18px; /* Tăng cỡ chữ trong bảng */
         }
-    </tbody>
-</table>
-@*@if (Model.status != "Paid")
-{
-    <button class="btn btn-primary pay-momo" data-order-id="@Model.orderId">Thanh toán MOMO</button>
-}*@
-<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Về trang chủ</a>
+
+    .btn-primary {
+        padding: 12px 24px;
+        font-size: 18px; /* Tăng cỡ chữ nút */
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>

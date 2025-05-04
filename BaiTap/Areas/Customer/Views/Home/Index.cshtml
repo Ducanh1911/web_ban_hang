@@ -8,32 +8,29 @@
 @section Styles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        /* Header Container for Sidebar and Banner/Products */
         .header-container {
             display: flex;
             gap: 30px;
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-            align-items: flex-start; /* Align items at the top */
+            align-items: flex-start;
         }
 
-        /* Banner and Products Container */
         .banner-products-container {
-            flex: 1; /* Take remaining space after sidebar */
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 20px; /* Space between banner and products */
+            gap: 20px;
         }
 
-        /* Banner Styles */
         .banner {
             width: 100%;
         }
 
             .banner img {
                 width: 100%;
-                height: 300px; /* Adjust height as needed */
+                height: 300px;
                 object-fit: cover;
                 border-radius: 10px;
                 display: block;
@@ -45,9 +42,9 @@
             padding: 20px;
             border-radius: 10px;
             font-size: 16px;
-            position: sticky; /* Make sidebar sticky */
-            top: 20px; /* Stick 20px from the top */
-            height: fit-content; /* Adjust height to content */
+            position: sticky;
+            top: 20px;
+            height: fit-content;
         }
 
             .sidebar h5 {
@@ -178,7 +175,7 @@
             }
 
         .product-name {
-            font-size: 1rem;
+            font-size: 2rem;
             margin: 10px 0;
             color: #333;
             height: 40px;
@@ -195,20 +192,21 @@
 
         .original-price {
             text-decoration: line-through;
-            color: #000; /* Màu đen */
+            color: #000; /* Changed to black */
             margin-right: 10px;
             font-size: 14px;
         }
 
         .discounted-price {
-            color: #000; /* Màu đen */
+            color: #000; /* Changed to black */
             font-weight: bold;
             font-size: 16px;
         }
 
-        .text-primary {
+        .text-primaryy
+        {
             font-size: 16px;
-            color: #000; /* Màu đen */
+            color: #000; /* Changed to black */
             font-weight: bold;
         }
 
@@ -283,13 +281,12 @@
             // Smooth scroll to "Tất cả sản phẩm" when clicking category
             categoryLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
-                    // Không ngăn chặn mặc định để URL vẫn chuyển hướng
                     setTimeout(() => {
                         const allProductsSection = document.getElementById('all-products');
                         if (allProductsSection) {
                             allProductsSection.scrollIntoView({ behavior: 'smooth' });
                         }
-                    }, 100); // Delay nhỏ để đảm bảo trang tải xong
+                    }, 100);
                 });
             });
         });
@@ -327,7 +324,7 @@
     <div class="banner-products-container">
         <!-- Banner Section -->
         <div class="banner">
-            <img src="~/Content/image/home-bg.jpg" alt="Promotional Banner" />
+            <img src="~/Content/image/trangchu.jpg" alt="Promotional Banner" />
             <!-- Replace with your actual banner image path -->
         </div>
 
@@ -352,12 +349,12 @@
                             <div class="price">
                                 @if (item.discount > 0)
                                 {
-                                    <span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                                    @*<span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>*@
                                     <span class="discounted-price">@String.Format("{0:N0}", item.price - item.discount).Replace(",", ".")</span>
                                 }
                                 else
                                 {
-                                    <span class="text-primary">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                                    <span class="text-primaryy">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
                                 }
                             </div>
                             <form action="@Url.Action("AddToCart", "Cart")" method="post">
@@ -392,7 +389,7 @@
                                 }
                                 else
                                 {
-                                    <span class="text-primary">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                                    <span class="text-primaryy">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
                                 }
                             </div>
                             <form action="@Url.Action("AddToCart", "Cart")" method="post">
@@ -422,12 +419,12 @@
                             <div class="price">
                                 @if (item.discount > 0)
                                 {
-                                    <span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                                    @*<span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>*@
                                     <span class="discounted-price">@String.Format("{0:N0}", item.price - item.discount).Replace(",", ".")</span>
                                 }
                                 else
                                 {
-                                    <span class="text-primary">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                                    <span class="text-primaryy">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
                                 }
                             </div>
                             <form action="@Url.Action("AddToCart", "Cart")" method="post">
@@ -457,12 +454,12 @@
                             <div class="price">
                                 @if (item.discount > 0)
                                 {
-                                    <span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                                    @*<span class="original-price">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>*@
                                     <span class="discounted-price">@String.Format("{0:N0}", item.price - item.discount).Replace(",", ".")</span>
                                 }
                                 else
                                 {
-                                    <span class="text-primary">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
+                                    <span class="text-primaryy">@String.Format("{0:N0}", item.price).Replace(",", ".")</span>
                                 }
                             </div>
                             <form action="@Url.Action("AddToCart", "Cart")" method="post">

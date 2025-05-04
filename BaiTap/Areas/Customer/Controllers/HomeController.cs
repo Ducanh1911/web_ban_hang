@@ -38,10 +38,11 @@ namespace BaiTap.Areas.Customer.Controllers
             ViewBag.CategoryId = categoryId;
 
             // Lấy sản phẩm thịnh hành (không lọc theo danh mục)
-            var trendingQuery = _db.Products.AsQueryable(); // Không áp dụng bộ lọc danh mục
+            var trendingQuery = _db.Products
+                .Where(p => p.price > 20000000); // Lọc sản phẩm có giá trên 20,000,000
             ViewBag.TrendingProducts = trendingQuery
-                .OrderBy(p => Guid.NewGuid()) // Ngẫu nhiên
-                .Take(4)
+                .OrderBy(p => p.price) // Sắp xếp theo giá
+                .Take(6)
                 .ToList();
 
             // Lấy sản phẩm bán chạy (lọc theo danh mục nếu được chỉ định)
@@ -62,15 +63,15 @@ namespace BaiTap.Areas.Customer.Controllers
             }
             ViewBag.BestSellingProducts = bestSellingQuery
                 .OrderByDescending(x => x.TotalQuantity)
-                .Take(4)
+                .Take(6)
                 .Select(x => x.Product)
                 .ToList();
 
             // Lấy sản phẩm gợi ý (không lọc theo danh mục)
-            var recommendedQuery = _db.Products.AsQueryable(); // Không áp dụng bộ lọc danh mục
+            var recommendedQuery = _db.Products.AsQueryable(); 
             ViewBag.RecommendedProducts = recommendedQuery
-                .OrderBy(p => Guid.NewGuid()) // Ngẫu nhiên
-                .Take(4)
+                .OrderBy(p => Guid.NewGuid()) 
+                .Take(6)
                 .ToList();
 
             return View(pagedProducts);

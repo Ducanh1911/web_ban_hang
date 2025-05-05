@@ -20,46 +20,66 @@
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <div class="topbar-divider d-none d-sm-block"></div>
     @{
         var user = BaiTap.App_Start.SessionConfig.GetUser();
+        int cartCount = 0;
+
+        if (user != null)
+        {
+            using (var db = new BaiTap.Models.ShopEntities())
+            {
+                cartCount = db.Carts
+                              .Where(c => c.userId == user.userId)
+                              .Sum(c => (int?)c.quantity) ?? 0;
+            }
+        }
     }
     <!-- HEADER -->
-<header class="header">
-    <div id="menu-btn" class="fas fa-bars"></div>
+    <header class="header">
+        <div id="menu-btn" class="fas fa-bars"></div>
 
-    <a href="~/Customer/Home/Index" class="logo" style="text-decoration: none;">Tạp Hoá HC</a>
-        
-    <nav class="navbar">
-        <a href="~/Customer/Home" style="text-decoration: none;">Home</a>
-        <a href="#about" style="text-decoration: none;">about</a>
-        <a href="#menu" style="text-decoration: none;">menu</a>
-        <a href="#review" style="text-decoration: none;">Review</a>
-        <a href="#book" style="text-decoration: none;">Contact</a>
-    </nav>
+        <a href="~/Customer/Home/Index" class="logo" style="text-decoration: none;">Tạp Hoá HC</a>
 
-    @if (user != null)
-    {
-        <div class="dropdown d-inline-block">
-            <a class="btn btn-light dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-2">@user.fullName</span>
-                <img class="img-profile rounded-circle" src="~/Img/avt.jpg" style="width: 30px; height: 30px;" />
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="~/User/Profile">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger" href="~/User/Logout">Đăng xuất</a></li>
-            </ul>
-            <a class="btn btn-primary" href="~/Customer/Cart/Cart"><i class="fas fa-cart-plus"></i></a>
-        </div>
-    }
-    else
-    {
-        <a href="~/User/Login" class="btn">Đăng Nhập</a>
-    }
-    
-</header>
-    
+        <nav class="navbar">
+            <a href="~/Customer/Home" style="text-decoration: none;">Home</a>
+            <a href="#about" style="text-decoration: none;">about</a>
+            <a href="#menu" style="text-decoration: none;">menu</a>
+            <a href="#review" style="text-decoration: none;">Review</a>
+            <a href="#book" style="text-decoration: none;">Contact</a>
+        </nav>
+
+        @if (user != null)
+        {
+            <div class="dropdown d-inline-block">
+                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="me-2">@user.fullName</span>
+                    <img class="img-profile rounded-circle" src="~/Img/avt.jpg" style="width: 30px; height: 30px;" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="~/User/Profile">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="~/User/Logout">Đăng xuất</a></li>
+                </ul>
+
+                <a class="btn btn-primary position-relative ms-2" href="~/Customer/Cart/Cart">
+                    <i class="fas fa-cart-plus"></i>
+                    @if (cartCount > 0)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            @cartCount
+                            <span class="visually-hidden">sản phẩm trong giỏ</span>
+                        </span>
+                    }
+                </a>
+            </div>
+        }
+        else
+        {
+            <a href="~/User/Login" class="btn">Đăng Nhập</a>
+        }
+    </header>
+
+
     <main role="main" class="pb-3" style="margin-top: 80px">
         @RenderBody()
     </main>
